@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "reparApp",
-    "slug": "reparApp",
+    "name": "rufix",
+    "slug": "rufix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "reparApp",
+    "scheme": "rufix",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
