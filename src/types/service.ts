@@ -1,7 +1,11 @@
 import { Building } from './building';
 import { Provider } from './provider';
 
-export type ServiceStatus = 'pending' | 'inProgress' | 'finished';
+export enum ServiceStatus {
+  pending = 'pending',
+  inProgress = 'inProgress',
+  finished = 'finished',
+}
 
 export interface Service {
   id: string;

@@ -1,6 +1,6 @@
 import { Provider, ProviderSector } from '../types/provider';
 import { Building } from '../types/building';
-import { Service } from '../types/service';
+import { Service, ServiceStatus } from '../types/service';
 
 // === ProviderSector ===
 export const providerSectors: ProviderSector[] = [
@@ -86,7 +86,7 @@ export const services: Service[] = [
     unit: '3A',
     serviceDescription: 'Reparación de pared con humedad en el baño',
     provider: providers[0],
-    status: 'pending',
+    status: ServiceStatus.pending,
     startDate: '2025-10-15',
   },
   {
@@ -95,7 +95,7 @@ export const services: Service[] = [
     unit: '2B',
     serviceDescription: 'Pintura de pasillos comunes',
     provider: providers[1],
-    status: 'inProgress',
+    status: ServiceStatus.inProgress,
     startDate: '2025-10-10',
   },
   {
@@ -104,7 +104,7 @@ export const services: Service[] = [
     unit: '4C',
     serviceDescription: 'Cambio de luminarias en hall de entrada',
     provider: providers[2],
-    status: 'finished',
+    status: ServiceStatus.finished,
     startDate: '2025-09-28',
     finishDate: '2025-10-05',
   },
@@ -114,7 +114,7 @@ export const services: Service[] = [
     unit: '1A',
     serviceDescription: 'Reparación de caño roto en cocina',
     provider: providers[3],
-    status: 'inProgress',
+    status: ServiceStatus.inProgress,
     startDate: '2025-10-18',
   },
   {
@@ -123,7 +123,7 @@ export const services: Service[] = [
     unit: '5D',
     serviceDescription: 'Refacción completa del balcón',
     provider: providers[4],
-    status: 'pending',
+    status: ServiceStatus.pending,
     startDate: '2025-10-22',
   },
   {
@@ -132,7 +132,7 @@ export const services: Service[] = [
     unit: '2C',
     serviceDescription: 'Pintura de fachada principal',
     provider: providers[1],
-    status: 'pending',
+    status: ServiceStatus.pending,
     startDate: '2025-10-20',
   },
   {
@@ -141,7 +141,7 @@ export const services: Service[] = [
     unit: '3B',
     serviceDescription: 'Mantenimiento eléctrico general',
     provider: providers[2],
-    status: 'inProgress',
+    status: ServiceStatus.inProgress,
     startDate: '2025-10-12',
   },
   {
@@ -150,7 +150,7 @@ export const services: Service[] = [
     unit: 'PH',
     serviceDescription: 'Cambio de cañerías principales',
     provider: providers[3],
-    status: 'finished',
+    status: ServiceStatus.finished,
     startDate: '2025-09-20',
     finishDate: '2025-09-28',
   },
@@ -160,7 +160,7 @@ export const services: Service[] = [
     unit: '2A',
     serviceDescription: 'Refacción del techo del hall de entrada',
     provider: providers[0],
-    status: 'pending',
+    status: ServiceStatus.pending,
     startDate: '2025-10-21',
   },
   {
@@ -169,7 +169,7 @@ export const services: Service[] = [
     unit: '4B',
     serviceDescription: 'Pintura interior de escaleras',
     provider: providers[1],
-    status: 'finished',
+    status: ServiceStatus.finished,
     startDate: '2025-09-10',
     finishDate: '2025-09-20',
   },
