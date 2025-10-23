@@ -1,9 +1,5 @@
-import { Text } from 'react-native-paper';
+import ServicesView from '@/src/components/ServicesView/ServicesView';
 
-export default function HomeScreen() {
-  return (
-    <>
-      <Text>Welcome to the Home Screen!</Text>
-    </>
-  );
+export default function ServicesScreen() {
+  return <ServicesView />;
 }

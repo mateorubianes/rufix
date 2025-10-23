@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { theme } from '../../src/theme';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TabsLayout() {
   return (
@@ -21,7 +22,28 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Inicio',
+          title: 'Reclamos',
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            <MaterialIcons name="home-repair-service" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="providers"
+        options={{
+          title: 'Proveedores',
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            <MaterialIcons name="engineering" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="buildings"
+        options={{
+          title: 'Edificios',
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            <MaterialIcons name="apartment" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
