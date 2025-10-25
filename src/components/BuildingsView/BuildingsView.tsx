@@ -3,12 +3,14 @@ import CustomCard from '@/src/components/CustomCard/CustomCard';
 import { buildings } from '@/src/mockData';
 import { Building } from '@/src/types/building';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import AddCard from '../AddCard/AddCard';
 import styles from './styles';
 
 export default function BuildingsView() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
+        <AddCard />
         <FlatList<Building>
           data={buildings}
           keyExtractor={(item: Building) => item.id}

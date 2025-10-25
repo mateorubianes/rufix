@@ -20,7 +20,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="services"
         options={{
           title: 'Reclamos',
           tabBarIcon: ({ color, size }: { color: string; size: number }) => (

@@ -14,6 +14,26 @@ export const es = {
       cleaning: 'Limpieza',
       maintenance: 'Mantenimiento',
     },
+    form: {
+      title: 'Nuevo Reclamo',
+      building: 'Edificio',
+      buildingPlaceholder: 'Selecciona un edificio',
+      unit: 'Unidad',
+      unitPlaceholder: 'Ingresa el número de unidad',
+      description: 'Descripción del problema',
+      descriptionPlaceholder: 'Describe el problema detalladamente',
+      provider: 'Proveedor',
+      providerPlaceholder: 'Selecciona un proveedor',
+      startDate: 'Fecha de inicio',
+      submit: 'Crear Reclamo',
+      cancel: 'Cancelar',
+      success: 'Reclamo creado exitosamente',
+      error: 'Error al crear el reclamo',
+      errorBuilding: 'Debes seleccionar un edificio',
+      errorUnit: 'Debes ingresar una unidad',
+      errorDescription: 'Debes proporcionar una descripción del problema',
+      errorProvider: 'Debes seleccionar un proveedor',
+    },
   },
   statusLabels: {
     pending: 'Pendiente',
@@ -23,5 +43,6 @@ export const es = {
   buttons: {
     edit: 'Editar',
     finishClaim: 'Finalizar Reclamo',
+    newClaim: 'Nuevo Reclamo',
   },
 };
