@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { theme } from '../../theme';
 
-export default StyleSheet.create({
+const styles = {
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -67,4 +67,6 @@ export default StyleSheet.create({
     color: theme.colors.error.main,
     marginTop: theme.spacing.xs,
   },
-});
+};
+
+export default styles;

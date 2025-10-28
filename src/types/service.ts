@@ -12,7 +12,7 @@ export interface Service {
   building: Building;
   unit: string;
   serviceDescription: string;
-  provider: Provider;
+  provider: Provider | null;
   status: ServiceStatus;
   startDate: string;
   finishDate?: string;

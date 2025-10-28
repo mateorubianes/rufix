@@ -1,5 +1,5 @@
 import { FlatList, ScrollView } from 'react-native';
-import CustomCard from '@/src/components/CustomCard/CustomCard';
+import CustomCard from '@/src/components/ServiceCard/CustomCard';
 import { buildings } from '@/src/mockData';
 import { Building } from '@/src/types/building';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
@@ -11,7 +11,7 @@ export default function BuildingsView() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <AddCard />
-        <FlatList<Building>
+        {/* <FlatList<Building>
           data={buildings}
           keyExtractor={(item: Building) => item.id}
           renderItem={({ item }: { item: Building }) => (
@@ -23,7 +23,7 @@ export default function BuildingsView() {
               }
             />
           )}
-        />
+        /> */}
       </SafeAreaView>
     </SafeAreaProvider>
   );

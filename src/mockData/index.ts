@@ -79,13 +79,13 @@ export const providers: Provider[] = [
 ];
 
 // === Services ===
-export const services: Service[] = [
+export const serviceData: Service[] = [
   {
     id: 's1',
     building: buildings[0],
     unit: '3A',
     serviceDescription: 'Reparación de pared con humedad en el baño',
-    provider: providers[0],
+    provider: null,
     status: ServiceStatus.pending,
     startDate: '2025-10-15',
   },
@@ -122,7 +122,7 @@ export const services: Service[] = [
     building: buildings[4],
     unit: '5D',
     serviceDescription: 'Refacción completa del balcón',
-    provider: providers[4],
+    provider: null,
     status: ServiceStatus.pending,
     startDate: '2025-10-22',
   },
@@ -131,7 +131,7 @@ export const services: Service[] = [
     building: buildings[0],
     unit: '2C',
     serviceDescription: 'Pintura de fachada principal',
-    provider: providers[1],
+    provider: null,
     status: ServiceStatus.pending,
     startDate: '2025-10-20',
   },
@@ -159,7 +159,7 @@ export const services: Service[] = [
     building: buildings[3],
     unit: '2A',
     serviceDescription: 'Refacción del techo del hall de entrada',
-    provider: providers[0],
+    provider: null,
     status: ServiceStatus.pending,
     startDate: '2025-10-21',
   },

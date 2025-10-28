@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   icon: {
-    backgroundColor: theme.colors.primary.light,
+    backgroundColor: theme.colors.primary.main,
     color: theme.colors.background.default,
   },
 });

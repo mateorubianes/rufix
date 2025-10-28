@@ -1,5 +1,5 @@
 import { FlatList, ScrollView } from 'react-native';
-import CustomCard from '@/src/components/CustomCard/CustomCard';
+import CustomCard from '@/src/components/ServiceCard/CustomCard';
 import { providers } from '@/src/mockData';
 import { Provider } from '@/src/types/provider';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
@@ -11,7 +11,7 @@ export default function ProvidersView() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <AddCard />
-        <FlatList<Provider>
+        {/* <FlatList<Provider>
           data={providers}
           keyExtractor={(item: Provider) => item.id}
           renderItem={({ item }: { item: Provider }) => (
@@ -21,7 +21,7 @@ export default function ProvidersView() {
               description={item.phoneNumber.toString()}
             />
           )}
-        />
+        /> */}
       </SafeAreaView>
     </SafeAreaProvider>
   );

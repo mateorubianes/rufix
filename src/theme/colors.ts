@@ -1,3 +1,5 @@
+import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+
 export const colors = {
   primary: {
     main: '#803a18',
@@ -40,6 +42,7 @@ export const colors = {
     primary: '#000000',
     secondary: '#666666',
     disabled: '#999999',
+    white: '#FFFFFF',
   },
   background: {
     default: '#FFFFFF',
