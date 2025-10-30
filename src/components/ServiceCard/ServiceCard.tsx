@@ -1,22 +1,45 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
 import { View, TextStyle } from 'react-native';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import styling from './styles';
 import { theme } from '@/src/theme';
 import { ServiceStatus } from '@/src/types/service';
-import { Provider } from '@/src/types/provider';
+import { Service } from '@/src/types/service';
+import AssignProviderModal from '../AssignProviderModal/AssignProviderModal';
+import FinishClaimModal from '../FinishClaimModal/FinishClaimModal';
 
 interface ServiceCardProps {
-  status: ServiceStatus;
-  building: string;
-  description: string;
-  provider: Provider | null;
+  service: Service;
 }
 
-export const ServiceCard = ({ status, building, description, provider }: ServiceCardProps) => {
+export const ServiceCard = ({ service }: ServiceCardProps) => {
   const { buttons, statusLabels } = useLanguage();
-  const styles = styling(status);
+  const styles = styling(service.status);
+
+  const [openModal, setOpenModal] = useState({
+    assignProvider: false,
+    finishClaim: false,
+  });
+
+  const closeModal = () => {
+    setOpenModal({
+      assignProvider: false,
+      finishClaim: false,
+    });
+  };
+  const openAssignModal = () => {
+    setOpenModal({
+      assignProvider: true,
+      finishClaim: false,
+    });
+  };
+  const openFinishModal = () => {
+    setOpenModal({
+      assignProvider: false,
+      finishClaim: true,
+    });
+  };
 
   const getStatusLabel = {
     [ServiceStatus.pending]: statusLabels.pending,
@@ -24,7 +47,7 @@ export const ServiceCard = ({ status, building, description, provider }: Service
     [ServiceStatus.finished]: statusLabels.finished,
   };
 
-  const renderCardTitle = getStatusLabel[status];
+  const renderCardTitle = getStatusLabel[service.status];
 
   return (
     <Card style={styles.card} elevation={5}>
@@ -33,32 +56,44 @@ export const ServiceCard = ({ status, building, description, provider }: Service
       <Card.Content>
         <View style={styles.cardContent}>
           <Avatar.Icon style={styles.icon} size={40} icon="office-building-marker" />
-          <Text variant="titleMedium">{building}</Text>
+          <Text variant="titleMedium">
+            {service.building?.direction ?? ''} {`(${service.unit})`}
+          </Text>
         </View>
-        {provider && (
+        {service.provider && (
           <View style={styles.cardContent}>
             <Avatar.Icon style={styles.icon} size={40} icon="account-hard-hat" />
-            <Text variant="titleMedium">{provider.name}</Text>
+            <Text variant="titleMedium">{service.provider.name}</Text>
           </View>
         )}
         <View style={styles.cardContent}>
           <Avatar.Icon style={styles.icon} size={40} icon="tools" />
-          <Text variant="titleMedium">{description}</Text>
+          <Text variant="titleMedium">{service.serviceDescription}</Text>
         </View>
       </Card.Content>
       <Divider style={styles.divider} bold />
-      {status === ServiceStatus.pending && (
+      {service.status === ServiceStatus.pending && (
         <Card.Actions style={styles.buttonsContainer}>
           <Button textColor={theme.colors.primary.main}>{buttons.edit}</Button>
-          <Button buttonColor={theme.colors.primary.main}>{buttons.assignProvider}</Button>
+          <Button onPress={openAssignModal} buttonColor={theme.colors.primary.main}>
+            {buttons.assignProvider}
+          </Button>
         </Card.Actions>
       )}
-      {status === ServiceStatus.inProgress && (
+      {service.status === ServiceStatus.inProgress && (
         <Card.Actions style={styles.buttonsContainer}>
           <Button textColor={theme.colors.primary.main}>{buttons.edit}</Button>
-          <Button buttonColor={theme.colors.primary.main}>{buttons.finishClaim}</Button>
+          <Button onPress={openFinishModal} buttonColor={theme.colors.primary.main}>
+            {buttons.finishClaim}
+          </Button>
         </Card.Actions>
       )}
+      <AssignProviderModal
+        visible={openModal.assignProvider}
+        onClose={closeModal}
+        service={service}
+      />
+      <FinishClaimModal visible={openModal.finishClaim} onClose={closeModal} service={service} />
     </Card>
   );
 };

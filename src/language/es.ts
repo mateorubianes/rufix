@@ -31,7 +31,9 @@ export const es = {
   buttons: {
     edit: 'Editar',
     finishClaim: 'Finalizar Reclamo',
+    finish: 'Finalizar',
     assignProvider: 'Asignar Proveedor',
+    assign: 'Asignar',
     newClaim: 'Nuevo Reclamo',
     create: 'Crear Reclamo',
     cancel: 'Cancelar',

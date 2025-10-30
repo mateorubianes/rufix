@@ -4,10 +4,12 @@ import { TextInput, Button, Modal, Portal, Text, HelperText, Menu } from 'react-
 import { Service, ServiceStatus } from '../../types/service';
 import { Building } from '../../types/building';
 import { Provider } from '../../types/provider';
-import { buildings, providers } from '../../mockData';
+import { buildings } from '../../mockData';
 import { styles } from './styles';
 import { useLanguage } from '../../hooks/useLanguage';
 import { saveService } from '@/src/utils/storage';
+import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
+import uuid from 'react-native-uuid';
 
 interface ModalFormProps {
   visible: boolean;
@@ -50,16 +52,18 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
     setShowError(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
 
     const newService: Service = {
-      id: crypto.randomUUID(),
+      id: uuid.v4().toString(),
       ...formData,
       status: ServiceStatus.pending,
       reciptDate: new Date().toISOString(),
     };
-    saveService(newService);
+
+    await saveService(newService);
+    serviceEvents.emit();
     resetForm();
     onClose();
   };
@@ -68,7 +72,7 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
     <Portal>
       <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
         <ScrollView>
-          <Text variant="headlineMedium" style={{ marginBottom: 20, textAlign: 'center' }}>
+          <Text variant="headlineMedium" style={styles.title}>
             {services.form.title}
           </Text>
 

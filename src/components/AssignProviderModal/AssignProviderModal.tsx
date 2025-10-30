@@ -1,0 +1,66 @@
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { Modal, Portal, Text, Button } from 'react-native-paper';
+import { styles } from './styles';
+import { useLanguage } from '../../hooks/useLanguage';
+import { SelectInput, SelectInputOption } from '../SelectInput/SelectInput';
+import { providers } from '@/src/mockData';
+import { updateService } from '@/src/utils/storage';
+import { Service, ServiceStatus } from '@/src/types/service';
+import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
+
+interface AssignProviderModalProps {
+  visible: boolean;
+  onClose: () => void;
+  service: Service;
+}
+
+export default function AssignProviderModal({
+  visible,
+  onClose,
+  service,
+}: AssignProviderModalProps) {
+  const { buttons } = useLanguage();
+  const [selectedProvider, setSelectedProvider] = useState<SelectInputOption | null>(null);
+
+  const handleAssignProvider = async () => {
+    if (!selectedProvider) return;
+
+    const updatedService: Service = {
+      ...service,
+      startDate: new Date().toISOString(),
+      provider: selectedProvider.value,
+      status: ServiceStatus.inProgress,
+    };
+    await updateService(updatedService);
+    serviceEvents.emit();
+    onClose();
+  };
+
+  const options = providers.map((provider) => ({ label: provider.name, value: provider }));
+
+  return (
+    <Portal>
+      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
+        <Text variant="headlineMedium" style={styles.title}>
+          {buttons.assignProvider}
+        </Text>
+        <SelectInput
+          label="Gender"
+          placeholder="Select Gender"
+          options={options}
+          value={selectedProvider}
+          onChange={(option: SelectInputOption | null) => setSelectedProvider(option)}
+        />
+        <View style={styles.buttonContainer}>
+          <Button mode="outlined" onPress={onClose} style={styles.button}>
+            {buttons.cancel}
+          </Button>
+          <Button mode="contained" onPress={handleAssignProvider} style={styles.button}>
+            {buttons.assign}
+          </Button>
+        </View>
+      </Modal>
+    </Portal>
+  );
+}

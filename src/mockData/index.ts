@@ -87,7 +87,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Reparación de pared con humedad en el baño',
     provider: null,
     status: ServiceStatus.pending,
-    startDate: '2025-10-15',
+    reciptDate: '2025-10-15',
   },
   {
     id: 's2',
@@ -96,7 +96,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Pintura de pasillos comunes',
     provider: providers[1],
     status: ServiceStatus.inProgress,
-    startDate: '2025-10-10',
+    reciptDate: '2025-10-10',
   },
   {
     id: 's3',
@@ -105,7 +105,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Cambio de luminarias en hall de entrada',
     provider: providers[2],
     status: ServiceStatus.finished,
-    startDate: '2025-09-28',
+    reciptDate: '2025-09-28',
     finishDate: '2025-10-05',
   },
   {
@@ -115,7 +115,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Reparación de caño roto en cocina',
     provider: providers[3],
     status: ServiceStatus.inProgress,
-    startDate: '2025-10-18',
+    reciptDate: '2025-10-18',
   },
   {
     id: 's5',
@@ -124,7 +124,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Refacción completa del balcón',
     provider: null,
     status: ServiceStatus.pending,
-    startDate: '2025-10-22',
+    reciptDate: '2025-10-22',
   },
   {
     id: 's6',
@@ -133,7 +133,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Pintura de fachada principal',
     provider: null,
     status: ServiceStatus.pending,
-    startDate: '2025-10-20',
+    reciptDate: '2025-10-20',
   },
   {
     id: 's7',
@@ -142,7 +142,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Mantenimiento eléctrico general',
     provider: providers[2],
     status: ServiceStatus.inProgress,
-    startDate: '2025-10-12',
+    reciptDate: '2025-10-12',
   },
   {
     id: 's8',
@@ -151,7 +151,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Cambio de cañerías principales',
     provider: providers[3],
     status: ServiceStatus.finished,
-    startDate: '2025-09-20',
+    reciptDate: '2025-09-20',
     finishDate: '2025-09-28',
   },
   {
@@ -161,7 +161,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Refacción del techo del hall de entrada',
     provider: null,
     status: ServiceStatus.pending,
-    startDate: '2025-10-21',
+    reciptDate: '2025-10-21',
   },
   {
     id: 's10',
@@ -170,7 +170,7 @@ export const serviceData: Service[] = [
     serviceDescription: 'Pintura interior de escaleras',
     provider: providers[1],
     status: ServiceStatus.finished,
-    startDate: '2025-09-10',
+    reciptDate: '2025-09-10',
     finishDate: '2025-09-20',
   },
 ];

@@ -8,14 +8,10 @@ export const styles = StyleSheet.create({
     padding: theme.spacing.md,
     margin: theme.spacing.md,
     flex: 1,
-    maxHeight: '50%',
-  },
-  input: {
-    marginBottom: theme.spacing.sm,
-    backgroundColor: theme.colors.background.default,
+    maxHeight: '30%',
   },
   buttonContainer: {
-    flexDirection: 'row' as const,
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: theme.spacing.md,
   },

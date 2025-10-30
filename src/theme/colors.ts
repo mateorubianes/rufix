@@ -7,6 +7,7 @@ export const colors = {
   },
   secondary: {
     main: '#ddb480',
+    light: '#ffe9cbff',
   },
   acento: {
     main: '#a7c7e7',
