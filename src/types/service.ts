@@ -14,7 +14,7 @@ export interface Service {
   serviceDescription: string;
   provider: Provider | null;
   status: ServiceStatus;
-  reciptDate: string;
+  receptionDate: string;
   startDate?: string;
   finishDate?: string;
 }

@@ -22,6 +22,9 @@ export const es = {
       providerPlaceholder: 'Seleccione un proveedor',
       validation: 'Todos los campos son obligatorios',
     },
+    receptionDate: 'Fecha de recepción',
+    startDate: 'Fecha de inicio',
+    finishDate: 'Fecha de finalización',
   },
   statusLabels: {
     pending: 'Pendiente',

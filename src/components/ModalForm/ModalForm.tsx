@@ -59,7 +59,7 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
       id: uuid.v4().toString(),
       ...formData,
       status: ServiceStatus.pending,
-      reciptDate: new Date().toISOString(),
+      receptionDate: new Date().toISOString(),
     };
 
     await saveService(newService);

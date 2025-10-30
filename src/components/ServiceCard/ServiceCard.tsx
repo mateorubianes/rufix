@@ -6,6 +6,7 @@ import styling from './styles';
 import { theme } from '@/src/theme';
 import { ServiceStatus } from '@/src/types/service';
 import { Service } from '@/src/types/service';
+import { formatDate } from '@/src/utils/dateParser';
 import AssignProviderModal from '../AssignProviderModal/AssignProviderModal';
 import FinishClaimModal from '../FinishClaimModal/FinishClaimModal';
 
@@ -14,7 +15,7 @@ interface ServiceCardProps {
 }
 
 export const ServiceCard = ({ service }: ServiceCardProps) => {
-  const { buttons, statusLabels } = useLanguage();
+  const { buttons, statusLabels, services } = useLanguage();
   const styles = styling(service.status);
 
   const [openModal, setOpenModal] = useState({
@@ -69,6 +70,20 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
         <View style={styles.cardContent}>
           <Avatar.Icon style={styles.icon} size={40} icon="tools" />
           <Text variant="titleMedium">{service.serviceDescription}</Text>
+        </View>
+        <View style={styles.cardContent}>
+          <Avatar.Icon style={styles.icon} size={40} icon="calendar-month" />
+          <View style={styles.dates}>
+            <Text variant="titleMedium">
+              {`${services.receptionDate}: ${formatDate(service.receptionDate)}`}
+            </Text>
+            {service.startDate && (
+              <Text variant="titleMedium">{`${services.startDate}: ${formatDate(service.startDate)}`}</Text>
+            )}
+            {service.finishDate && (
+              <Text variant="titleMedium">{`${services.finishDate}: ${formatDate(service.finishDate)}`}</Text>
+            )}
+          </View>
         </View>
       </Card.Content>
       <Divider style={styles.divider} bold />

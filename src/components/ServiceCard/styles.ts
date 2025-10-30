@@ -19,6 +19,9 @@ const styling = (status: ServiceStatus) => {
       alignItems: 'center',
       marginBottom: theme.spacing.md,
     },
+    dates: {
+      alignContent: 'center',
+    },
     icon: {
       backgroundColor: theme.colors.primary.main,
       marginRight: theme.spacing.sm,
