@@ -9,11 +9,12 @@ export enum ServiceStatus {
 
 export interface Service {
   id: string;
-  building: Building;
+  building: Building | null;
   unit: string;
   serviceDescription: string;
   provider: Provider | null;
   status: ServiceStatus;
-  startDate: string;
+  reciptDate: string;
+  startDate?: string;
   finishDate?: string;
 }

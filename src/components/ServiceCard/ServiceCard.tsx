@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
-import { View } from 'react-native';
+import { View, TextStyle } from 'react-native';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import styling from './styles';
 import { theme } from '@/src/theme';
@@ -28,7 +28,7 @@ export const ServiceCard = ({ status, building, description, provider }: Service
 
   return (
     <Card style={styles.card} elevation={5}>
-      <Card.Title title={renderCardTitle} titleStyle={styles.title} />
+      <Card.Title title={renderCardTitle} titleStyle={styles.title as TextStyle} />
       <Divider style={styles.divider} bold />
       <Card.Content>
         <View style={styles.cardContent}>

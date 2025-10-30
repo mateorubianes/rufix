@@ -10,6 +10,18 @@ export const es = {
     inProgressClaims: 'Reclamos en proceso',
     finishedClaims: 'Reclamos finalizados',
     noServices: 'No hay reclamos para mostrar.',
+    form: {
+      title: 'Nuevo Reclamo',
+      unit: 'Unidad',
+      unitPlaceholder: 'Ingrese el número de unidad',
+      description: 'Descripción del problema',
+      descriptionPlaceholder: 'Describa el problema detalladamente',
+      building: 'Edificio',
+      buildingPlaceholder: 'Seleccione un edificio',
+      provider: 'Proveedor',
+      providerPlaceholder: 'Seleccione un proveedor',
+      validation: 'Todos los campos son obligatorios',
+    },
   },
   statusLabels: {
     pending: 'Pendiente',
@@ -21,5 +33,7 @@ export const es = {
     finishClaim: 'Finalizar Reclamo',
     assignProvider: 'Asignar Proveedor',
     newClaim: 'Nuevo Reclamo',
+    create: 'Crear Reclamo',
+    cancel: 'Cancelar',
   },
 };
