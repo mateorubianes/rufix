@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { TextInput, Button, Modal, Portal, Text, HelperText, Menu } from 'react-native-paper';
 import { Service, ServiceStatus } from '../../types/service';
-import { Building } from '../../types/building';
 import { Provider } from '../../types/provider';
-import { buildings } from '../../mockData';
 import { styles } from './styles';
 import { useLanguage } from '../../hooks/useLanguage';
-import { saveService } from '@/src/utils/storage';
+import { saveService, getBuildings } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 import uuid from 'react-native-uuid';
 import { SelectInput, SelectInputOption } from '../SelectInput/SelectInput';
@@ -33,6 +31,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
     provider: null,
   });
   const [showError, setShowError] = useState(false);
+  const [buildingOptions, setBuildingOptions] = useState<{ label: string; value: any }[]>([]);
 
   const validateForm = (): boolean => {
     if (!formData.unit || !formData.serviceDescription || !formData.building) {
@@ -69,10 +68,18 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
     onClose();
   };
 
-  const buildingOptions = buildings.map((building) => ({
-    label: building.direction,
-    value: building,
-  }));
+  const fetchAndSetBuildings = async () => {
+    const storedBuildings = await getBuildings();
+    const options = storedBuildings.map((building) => ({
+      label: building.direction,
+      value: building,
+    }));
+    setBuildingOptions(options);
+  };
+
+  useEffect(() => {
+    void fetchAndSetBuildings();
+  }, []);
 
   return (
     <Portal>

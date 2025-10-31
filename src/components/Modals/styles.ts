@@ -34,4 +34,12 @@ export const styles = StyleSheet.create({
   },
 });
 
+export const buildingModalStyle = (hasDoorman: boolean) => {
+  return StyleSheet.create({
+    container: {
+      maxHeight: hasDoorman ? '63%' : '45%',
+    },
+  });
+};
+
 export default styles;

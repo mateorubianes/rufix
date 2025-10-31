@@ -26,6 +26,29 @@ export const es = {
     startDate: 'Fecha de inicio',
     finishDate: 'Fecha de finalización',
   },
+  buildings: {
+    title: 'Edificios',
+    units: 'unidades',
+    form: {
+      title: 'Nuevo Edificio',
+      address: 'Dirección',
+      addressPlaceholder: 'Ingrese la dirección del edificio',
+      units: 'Cantidad de unidades',
+      unitsPlaceholder: 'Ingrese la cantidad de unidades',
+      hasDoorman: '¿Tiene portero?',
+      doormanYes: 'Sí',
+      doormanNo: 'No',
+      doormanName: 'Nombre del portero',
+      doormanContact: 'Contacto del portero',
+      errors: {
+        addressRequired: 'La dirección es obligatoria',
+        unitsRequired: 'La cantidad de unidades es obligatoria',
+        unitsNumeric: 'La cantidad debe ser un número válido',
+        doormanNameRequired: 'El nombre del portero es obligatorio',
+        doormanContactRequired: 'El contacto del portero es obligatorio',
+      },
+    },
+  },
   providers: {
     title: 'Proveedores',
     sectors: {
