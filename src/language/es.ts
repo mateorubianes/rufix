@@ -26,6 +26,19 @@ export const es = {
     startDate: 'Fecha de inicio',
     finishDate: 'Fecha de finalización',
   },
+  providers: {
+    title: 'Proveedores',
+    sectors: {
+      masonry: 'Albañilería',
+      plumbing: 'Plomería',
+      gas: 'Gasista',
+      electrician: 'Electricista',
+      blacksmithing: 'Herrería',
+      waterproofing: 'Impermeabilización',
+      electricIntercom: 'Portero eléctrico',
+      locksmith: 'Cerrajería',
+    },
+  },
   statusLabels: {
     pending: 'Pendiente',
     inProgress: 'En proceso',

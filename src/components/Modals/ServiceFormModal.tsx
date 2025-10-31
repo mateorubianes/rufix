@@ -10,8 +10,9 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { saveService } from '@/src/utils/storage';
 import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
 import uuid from 'react-native-uuid';
+import { SelectInput, SelectInputOption } from '../SelectInput/SelectInput';
 
-interface ModalFormProps {
+interface ServiceFormModalProps {
   visible: boolean;
   onClose: () => void;
 }
@@ -19,11 +20,11 @@ interface ModalFormProps {
 interface FormData {
   unit: string;
   serviceDescription: string;
-  building: Building | null;
+  building: SelectInputOption | null;
   provider: Provider | null;
 }
 
-export default function ModalForm({ visible, onClose }: ModalFormProps) {
+export default function ServiceFormModal({ visible, onClose }: ServiceFormModalProps) {
   const { services, buttons } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     unit: '',
@@ -32,7 +33,6 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
     provider: null,
   });
   const [showError, setShowError] = useState(false);
-  const [buildingMenuVisible, setBuildingMenuVisible] = useState(false);
 
   const validateForm = (): boolean => {
     if (!formData.unit || !formData.serviceDescription || !formData.building) {
@@ -56,8 +56,9 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
     if (!validateForm()) return;
 
     const newService: Service = {
-      id: uuid.v4().toString(),
       ...formData,
+      building: formData.building?.value || null,
+      id: uuid.v4().toString(),
       status: ServiceStatus.pending,
       receptionDate: new Date().toISOString(),
     };
@@ -68,6 +69,11 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
     onClose();
   };
 
+  const buildingOptions = buildings.map((building) => ({
+    label: building.direction,
+    value: building,
+  }));
+
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
@@ -75,34 +81,13 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
           <Text variant="headlineMedium" style={styles.title}>
             {services.form.title}
           </Text>
-
-          <Menu
-            visible={buildingMenuVisible}
-            onDismiss={() => setBuildingMenuVisible(false)}
-            anchor={
-              <TextInput
-                mode="outlined"
-                label={services.form.building}
-                placeholder={services.form.buildingPlaceholder}
-                value={formData.building?.direction || ''}
-                right={<TextInput.Icon icon="menu-down" />}
-                onPressIn={() => setBuildingMenuVisible(true)}
-                style={styles.input}
-              />
-            }
-          >
-            {buildings.map((building) => (
-              <Menu.Item
-                key={building.id}
-                onPress={() => {
-                  setFormData({ ...formData, building });
-                  setBuildingMenuVisible(false);
-                }}
-                title={building.direction}
-              />
-            ))}
-          </Menu>
-
+          <SelectInput
+            label={services.form.building}
+            placeholder={services.form.buildingPlaceholder}
+            value={formData.building}
+            options={buildingOptions}
+            onChange={(value) => setFormData({ ...formData, building: value })}
+          />
           <TextInput
             mode="outlined"
             label={services.form.unit}
@@ -111,7 +96,6 @@ export default function ModalForm({ visible, onClose }: ModalFormProps) {
             onChangeText={(text) => setFormData({ ...formData, unit: text })}
             style={styles.input}
           />
-
           <TextInput
             mode="outlined"
             label={services.form.description}

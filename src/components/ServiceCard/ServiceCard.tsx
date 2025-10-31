@@ -7,8 +7,8 @@ import { theme } from '@/src/theme';
 import { ServiceStatus } from '@/src/types/service';
 import { Service } from '@/src/types/service';
 import { formatDate } from '@/src/utils/dateParser';
-import AssignProviderModal from '../AssignProviderModal/AssignProviderModal';
-import FinishClaimModal from '../FinishClaimModal/FinishClaimModal';
+import AssignProviderModal from '../Modals//AssignProviderModal';
+import FinishClaimModal from '../Modals/FinishClaimModal';
 
 interface ServiceCardProps {
   service: Service;
