@@ -2,52 +2,57 @@ import React, { useState, useEffect } from 'react';
 import { TextStyle, ScrollView, Linking, Platform, TouchableOpacity } from 'react-native';
 import { List } from 'react-native-paper';
 import { useLanguage } from '@/src/hooks/useLanguage';
-import { providers, providerSectors as mockProviderSectors } from '@/src/mockData';
 import { Provider, ProviderSector } from '@/src/types/provider';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import AddCard from '../AddCard/AddCard';
 import styles from './styles';
+import { providerSectors as baseProviderSectors } from '@/src/utils/providerSectors';
+import { getProviders } from '@/src/utils/storage';
+import { updateEvents } from '@/src/utils/ServiceUpdateListener';
+
+const createSectorBasedState = <T,>(
+  sectors: ProviderSector[],
+  initialValue: T,
+): Record<string, T> => {
+  return sectors.reduce((acc, s) => ({ ...acc, [s.key]: initialValue }), {} as Record<string, T>);
+};
 
 export default function ProvidersView() {
-  // dynamic expanded state keyed by sector key
-  const [expanded, setExpanded] = useState<Record<string, boolean>>(
-    mockProviderSectors.reduce(
-      (acc, s) => ({ ...acc, [s.key]: false }),
-      {} as Record<string, boolean>,
-    ),
-  );
-
   const { providers: providersText } = useLanguage();
 
-  // use the mock sectors but attach localized labels from language
-  const providerSectors: ProviderSector[] = mockProviderSectors.map((s) => ({
+  const [expanded, setExpanded] = useState<Record<string, boolean>>(
+    createSectorBasedState(baseProviderSectors, false),
+  );
+  const [providersBySector, setProvidersBySector] = useState<Record<string, Provider[]>>(
+    createSectorBasedState(baseProviderSectors, []),
+  );
+
+  const providerSectors: ProviderSector[] = baseProviderSectors.map((s) => ({
     ...s,
     label: (providersText.sectors as any)[s.key] || s.key,
   }));
 
-  // state that holds providers grouped by sector (each key -> Provider[])
-  const [providersBySector, setProvidersBySector] = useState<Record<string, Provider[]>>(
-    mockProviderSectors.reduce(
-      (acc, s) => ({ ...acc, [s.key]: [] }),
-      {} as Record<string, Provider[]>,
-    ),
-  );
-
-  // helper to filter providers by sector key
   const filterProvidersBySector = (providersData: Provider[], sectorKey: string) => {
     return providersData.filter((p) => p.sector?.key === sectorKey);
   };
 
-  // populate providersBySector on mount
-  useEffect(() => {
-    const grouped: Record<string, Provider[]> = mockProviderSectors.reduce(
-      (acc, s) => ({ ...acc, [s.key]: [] }),
-      {} as Record<string, Provider[]>,
-    );
-    mockProviderSectors.forEach((s) => {
-      grouped[s.key] = filterProvidersBySector(providers, s.key);
+  const fetchAndSetProviders = async () => {
+    const storedProviders = await getProviders();
+    const grouped = createSectorBasedState(baseProviderSectors, [] as Provider[]);
+    baseProviderSectors.forEach((s) => {
+      grouped[s.key] = filterProvidersBySector(storedProviders, s.key);
     });
     setProvidersBySector(grouped);
+  };
+
+  useEffect(() => {
+    void fetchAndSetProviders();
+    const unsubscribe = updateEvents.subscribe(() => {
+      void fetchAndSetProviders();
+    });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleAccordionChange = (section: string) => {
@@ -57,7 +62,6 @@ export default function ProvidersView() {
     }));
   };
 
-  //Linking to phone dialer
   const callNumber = (phone: string) => {
     let phoneNumber = phone;
     if (Platform.OS !== 'android') {
@@ -91,7 +95,7 @@ export default function ProvidersView() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <AddCard />
+          <AddCard type="providers" />
           {providerSectors.map((sector) => (
             <List.Accordion
               key={sector.id}

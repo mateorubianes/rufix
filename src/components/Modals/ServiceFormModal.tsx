@@ -8,7 +8,7 @@ import { buildings } from '../../mockData';
 import { styles } from './styles';
 import { useLanguage } from '../../hooks/useLanguage';
 import { saveService } from '@/src/utils/storage';
-import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
+import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 import uuid from 'react-native-uuid';
 import { SelectInput, SelectInputOption } from '../SelectInput/SelectInput';
 
@@ -64,7 +64,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
     };
 
     await saveService(newService);
-    serviceEvents.emit();
+    updateEvents.emit();
     resetForm();
     onClose();
   };
@@ -76,7 +76,11 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
 
   return (
     <Portal>
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
+      <Modal
+        visible={visible}
+        onDismiss={onClose}
+        contentContainerStyle={[styles.modalView, styles.formsModal]}
+      >
         <ScrollView>
           <Text variant="headlineMedium" style={styles.title}>
             {services.form.title}

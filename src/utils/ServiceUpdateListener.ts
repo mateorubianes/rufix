@@ -1,6 +1,6 @@
 type Listener = () => void;
 
-class ServiceUpdateEmitter {
+class UpdateEmitter {
   private static listeners: Listener[] = [];
 
   static subscribe(listener: Listener) {
@@ -15,4 +15,4 @@ class ServiceUpdateEmitter {
   }
 }
 
-export const serviceEvents = ServiceUpdateEmitter;
+export const updateEvents = UpdateEmitter;

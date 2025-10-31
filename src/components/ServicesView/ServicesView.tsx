@@ -8,7 +8,7 @@ import AddCard from '../AddCard/AddCard';
 import styles from './styles';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import { getServices } from '@/src/utils/storage';
-import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
+import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 
 interface claimState {
   pending: Service[];
@@ -50,10 +50,9 @@ export default function ServicesView() {
 
   useEffect(() => {
     void fetchAndSetServices();
-    const unsubscribe = serviceEvents.subscribe(() => {
+    const unsubscribe = updateEvents.subscribe(() => {
       void fetchAndSetServices();
     });
-
     return () => {
       unsubscribe();
     };
@@ -66,7 +65,7 @@ export default function ServicesView() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <AddCard />
+          <AddCard type="services" />
           <List.Accordion
             onPress={() => handleAccordionChange('pending')}
             title={`${services.pendingClaims} (${claims?.pending.length})`}

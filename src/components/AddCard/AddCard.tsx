@@ -2,9 +2,15 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-paper';
 import ServiceFormModal from '../Modals/ServiceFormModal';
+import ProviderFormModal from '../Modals/ProviderFormModal';
 import styles from './styles';
 
-export default function AddCard() {
+type AddCardType = 'services' | 'providers';
+interface AddCardProps {
+  type: AddCardType;
+}
+
+export default function AddCard({ type }: AddCardProps) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
@@ -16,7 +22,11 @@ export default function AddCard() {
         <Avatar.Icon size={50} icon="plus" style={styles.icon} color={styles.icon.color} />
       </TouchableOpacity>
 
-      <ServiceFormModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      {type === 'providers' ? (
+        <ProviderFormModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      ) : (
+        <ServiceFormModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      )}
     </>
   );
 }

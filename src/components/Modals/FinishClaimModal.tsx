@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { useLanguage } from '../../hooks/useLanguage';
 import { updateService } from '@/src/utils/storage';
 import { Service, ServiceStatus } from '@/src/types/service';
-import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
+import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 
 interface FinishClaimModalProps {
   visible: boolean;
@@ -23,13 +23,17 @@ export default function FinishClaimModal({ visible, onClose, service }: FinishCl
       status: ServiceStatus.finished,
     };
     await updateService(updatedService);
-    serviceEvents.emit();
+    updateEvents.emit();
     onClose();
   };
 
   return (
     <Portal>
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
+      <Modal
+        visible={visible}
+        onDismiss={onClose}
+        contentContainerStyle={[styles.modalView, styles.statusModal]}
+      >
         <Text variant="headlineMedium" style={styles.title}>
           {buttons.finishClaim}
         </Text>

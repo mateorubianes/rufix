@@ -38,6 +38,20 @@ export const es = {
       electricIntercom: 'Portero eléctrico',
       locksmith: 'Cerrajería',
     },
+    form: {
+      title: 'Nuevo Proveedor',
+      name: 'Nombre',
+      namePlaceholder: 'Nombre del proveedor',
+      phone: 'Teléfono',
+      phonePlaceholder: 'Número del proveedor',
+      sector: 'Sector',
+      sectorPlaceholder: 'Seleccione un sector',
+      errors: {
+        nameRequired: 'El nombre es obligatorio',
+        phoneRequired: 'El teléfono es obligatorio',
+        sectorRequired: 'El sector es obligatorio',
+      },
+    },
   },
   statusLabels: {
     pending: 'Pendiente',
@@ -52,6 +66,7 @@ export const es = {
     assign: 'Asignar',
     newClaim: 'Nuevo Reclamo',
     create: 'Crear Reclamo',
+    save: 'Guardar',
     cancel: 'Cancelar',
   },
 };

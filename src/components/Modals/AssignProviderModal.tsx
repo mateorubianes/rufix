@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { Modal, Portal, Text, Button } from 'react-native-paper';
 import { styles } from './styles';
 import { useLanguage } from '../../hooks/useLanguage';
 import { SelectInput, SelectInputOption } from '../SelectInput/SelectInput';
-import { providers } from '@/src/mockData';
 import { updateService } from '@/src/utils/storage';
 import { Service, ServiceStatus } from '@/src/types/service';
-import { serviceEvents } from '@/src/utils/ServiceUpdateListener';
-
+import { updateEvents } from '@/src/utils/ServiceUpdateListener';
+import { getProviders } from '@/src/utils/storage';
 interface AssignProviderModalProps {
   visible: boolean;
   onClose: () => void;
@@ -20,8 +19,9 @@ export default function AssignProviderModal({
   onClose,
   service,
 }: AssignProviderModalProps) {
-  const { buttons } = useLanguage();
+  const { buttons, services } = useLanguage();
   const [selectedProvider, setSelectedProvider] = useState<SelectInputOption | null>(null);
+  const [options, setOptions] = useState<SelectInputOption[]>([]);
 
   const handleAssignProvider = async () => {
     if (!selectedProvider) return;
@@ -33,21 +33,33 @@ export default function AssignProviderModal({
       status: ServiceStatus.inProgress,
     };
     await updateService(updatedService);
-    serviceEvents.emit();
+    updateEvents.emit();
     onClose();
   };
 
-  const options = providers.map((provider) => ({ label: provider.name, value: provider }));
+  const fetchAndSetProviders = async () => {
+    const storedProviders = await getProviders();
+    const options = storedProviders.map((provider) => ({ label: provider.name, value: provider }));
+    setOptions(options);
+  };
+
+  useEffect(() => {
+    void fetchAndSetProviders();
+  }, []);
 
   return (
     <Portal>
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
+      <Modal
+        visible={visible}
+        onDismiss={onClose}
+        contentContainerStyle={[styles.modalView, styles.statusModal]}
+      >
         <Text variant="headlineMedium" style={styles.title}>
           {buttons.assignProvider}
         </Text>
         <SelectInput
-          label="Gender"
-          placeholder="Select Gender"
+          label={services.form.provider}
+          placeholder={services.form.providerPlaceholder}
           options={options}
           value={selectedProvider}
           onChange={(option: SelectInputOption | null) => setSelectedProvider(option)}
