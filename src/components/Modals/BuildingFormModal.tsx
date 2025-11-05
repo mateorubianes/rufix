@@ -21,12 +21,17 @@ interface BuildingFormModalProps {
   onClose: () => void;
 }
 
+interface DoormanForm {
+  name: string;
+  contact: string;
+}
+
 interface FormData {
+  cuit: string;
   address: string;
   units: string;
   hasDoorman: 'yes' | 'no';
-  doormanName: string;
-  doormanContact: string;
+  doormen: DoormanForm[];
 }
 
 export default function BuildingFormModal({ visible, onClose }: BuildingFormModalProps) {
@@ -34,16 +39,20 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
   const t = buildingsText.form;
 
   const [formData, setFormData] = useState<FormData>({
+    cuit: '',
     address: '',
     units: '',
     hasDoorman: 'no',
-    doormanName: '',
-    doormanContact: '',
+    doormen: [],
   });
 
   const [showError, setShowError] = useState(false);
 
   const validateForm = (): boolean => {
+    if (!formData.cuit.trim() || isNaN(Number(formData.cuit))) {
+      setShowError(true);
+      return false;
+    }
     if (!formData.address.trim()) {
       setShowError(true);
       return false;
@@ -56,19 +65,50 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
       setShowError(true);
       return false;
     }
-    if (formData.hasDoorman === 'yes') {
-      if (!formData.doormanName.trim() || !formData.doormanContact.trim()) {
-        setShowError(true);
-        return false;
-      }
+    if (formData.hasDoorman === 'yes' && formData.doormen.length === 0) {
+      setShowError(true);
+      return false;
+    }
+    if (formData.doormen.some((doorman) => !doorman.name.trim() || !doorman.contact.trim())) {
+      setShowError(true);
+      return false;
     }
     setShowError(false);
     return true;
   };
 
   const resetForm = () => {
-    setFormData({ address: '', units: '', hasDoorman: 'no', doormanName: '', doormanContact: '' });
+    setFormData({
+      cuit: '',
+      address: '',
+      units: '',
+      hasDoorman: 'no',
+      doormen: [],
+    });
     setShowError(false);
+  };
+
+  const addDoorman = () => {
+    setFormData((prev) => ({
+      ...prev,
+      doormen: [...prev.doormen, { name: '', contact: '' }],
+    }));
+  };
+
+  const removeDoorman = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      doormen: prev.doormen.filter((_, i) => i !== index),
+    }));
+  };
+
+  const updateDoorman = (index: number, field: keyof DoormanForm, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      doormen: prev.doormen.map((doorman, i) =>
+        i === index ? { ...doorman, [field]: value } : doorman,
+      ),
+    }));
   };
 
   const handleSubmit = async () => {
@@ -76,15 +116,25 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
 
     const newBuilding: Building = {
       id: uuid.v4().toString(),
+      cuit: formData.cuit,
       direction: formData.address.trim(),
       unitsQuantity: Number(formData.units),
       doorman:
         formData.hasDoorman === 'yes'
-          ? { name: formData.doormanName.trim(), contact: formData.doormanContact.trim() }
+          ? formData.doormen.map((d) => ({
+              name: d.name.trim(),
+              contact: Number(d.contact),
+            }))
           : null,
     };
-    await saveBuilding(newBuilding);
-    updateEvents.emit();
+    console.log(JSON.stringify(newBuilding, null, 2));
+    // await saveBuilding(newBuilding);
+    // updateEvents.emit();
+    // resetForm();
+    // onClose();
+  };
+
+  const handleClose = () => {
     resetForm();
     onClose();
   };
@@ -93,11 +143,26 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
 
   return (
     <Portal>
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
+      <Modal visible={visible} onDismiss={handleClose} contentContainerStyle={styles.modalView}>
         <ScrollView>
           <Text variant="headlineMedium" style={styles.title}>
             {t.title}
           </Text>
+          <TextInput
+            mode="outlined"
+            label={t.cuit}
+            placeholder={t.cuitPlaceholder}
+            value={formData.cuit}
+            onChangeText={(text) => setFormData({ ...formData, cuit: text.replace(/[^0-9]/g, '') })}
+            style={styles.input}
+            keyboardType="numeric"
+            error={showError && (!formData.cuit.trim() || isNaN(Number(formData.cuit)))}
+          />
+          {showError && (!formData.cuit.trim() || isNaN(Number(formData.cuit))) && (
+            <HelperText type="error" visible>
+              {t.errors.cuitRequired}
+            </HelperText>
+          )}
 
           <TextInput
             mode="outlined"
@@ -161,40 +226,71 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
 
           {formData.hasDoorman === 'yes' && (
             <>
-              <TextInput
-                mode="outlined"
-                label={t.doormanName}
-                placeholder={t.doormanName}
-                value={formData.doormanName}
-                onChangeText={(text) => setFormData({ ...formData, doormanName: text })}
-                style={styles.input}
-                error={showError && !formData.doormanName.trim()}
-              />
-              {showError && !formData.doormanName.trim() && (
-                <HelperText type="error" visible>
-                  {t.errors.doormanNameRequired}
-                </HelperText>
-              )}
+              <Button mode="outlined" onPress={addDoorman} style={{ marginVertical: 10 }}>
+                {t.addDoorman}
+              </Button>
 
-              <TextInput
-                mode="outlined"
-                label={t.doormanContact}
-                placeholder={t.doormanContact}
-                value={formData.doormanContact}
-                onChangeText={(text) => setFormData({ ...formData, doormanContact: text })}
-                style={styles.input}
-                error={showError && !formData.doormanContact.trim()}
-              />
-              {showError && !formData.doormanContact.trim() && (
+              {formData.doormen.map((doorman, index) => (
+                <View key={index} style={{ marginBottom: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <Text>
+                      {t.doormanTitle}
+                      {index + 1}
+                    </Text>
+                    <Button onPress={() => removeDoorman(index)}>{t.removeDoorman}</Button>
+                  </View>
+
+                  <TextInput
+                    mode="outlined"
+                    label={t.doormanName}
+                    placeholder={t.doormanName}
+                    value={doorman.name}
+                    onChangeText={(text) => updateDoorman(index, 'name', text)}
+                    style={styles.input}
+                    error={showError && !doorman.name.trim()}
+                  />
+                  {showError && !doorman.name.trim() && (
+                    <HelperText type="error" visible>
+                      {t.errors.doormanNameRequired}
+                    </HelperText>
+                  )}
+
+                  <TextInput
+                    mode="outlined"
+                    label={t.doormanContact}
+                    placeholder={t.doormanContact}
+                    value={doorman.contact}
+                    onChangeText={(text) =>
+                      updateDoorman(index, 'contact', text.replace(/[^0-9]/g, ''))
+                    }
+                    style={styles.input}
+                    error={showError && !doorman.contact.trim()}
+                    keyboardType="numeric"
+                  />
+                  {showError && !doorman.contact.trim() && (
+                    <HelperText type="error" visible>
+                      {t.errors.doormanContactRequired}
+                    </HelperText>
+                  )}
+                </View>
+              ))}
+
+              {formData.hasDoorman === 'yes' && formData.doormen.length === 0 && showError && (
                 <HelperText type="error" visible>
-                  {t.errors.doormanContactRequired}
+                  {t.errors.atLeastOneDoorman}
                 </HelperText>
               )}
             </>
           )}
 
           <View style={styles.buttonContainer}>
-            <Button mode="outlined" style={styles.button} onPress={onClose}>
+            <Button mode="outlined" style={styles.button} onPress={handleClose}>
               {buttons.cancel}
             </Button>
             <Button mode="contained" style={styles.button} onPress={handleSubmit}>
