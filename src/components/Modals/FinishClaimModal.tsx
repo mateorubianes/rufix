@@ -17,10 +17,20 @@ export default function FinishClaimModal({ visible, onClose, service }: FinishCl
   const { buttons } = useLanguage();
 
   const finishClaim = async () => {
+    const updatedManagements = [...service.managements];
+
+    const finishedManagementIndex = service.managements.findIndex(
+      (management) => management.finishDate === null,
+    );
+    //Update finished management
+    updatedManagements[finishedManagementIndex] = {
+      ...updatedManagements[finishedManagementIndex],
+      finishDate: new Date().toISOString(),
+    };
     const updatedService: Service = {
       ...service,
-      finishDate: new Date().toISOString(),
       status: ServiceStatus.finished,
+      managements: updatedManagements,
     };
     await updateService(updatedService);
     updateEvents.emit();
@@ -29,11 +39,7 @@ export default function FinishClaimModal({ visible, onClose, service }: FinishCl
 
   return (
     <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={onClose}
-        contentContainerStyle={[styles.modalView, styles.statusModal]}
-      >
+      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
         <Text variant="headlineMedium" style={styles.title}>
           {buttons.finishClaim}
         </Text>

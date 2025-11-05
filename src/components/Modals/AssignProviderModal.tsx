@@ -26,10 +26,21 @@ export default function AssignProviderModal({
   const handleAssignProvider = async () => {
     if (!selectedProvider) return;
 
+    const managementIndex = service.managements.findIndex(
+      (management) => management.provider === null,
+    );
+    if (managementIndex === -1) return;
+
+    const updatedManagements = [...service.managements];
+    updatedManagements[managementIndex] = {
+      ...updatedManagements[managementIndex],
+      provider: selectedProvider.value,
+      startDate: new Date().toISOString(),
+    };
+
     const updatedService: Service = {
       ...service,
-      startDate: new Date().toISOString(),
-      provider: selectedProvider.value,
+      managements: updatedManagements,
       status: ServiceStatus.inProgress,
     };
     await updateService(updatedService);
@@ -49,11 +60,7 @@ export default function AssignProviderModal({
 
   return (
     <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={onClose}
-        contentContainerStyle={[styles.modalView, styles.statusModal]}
-      >
+      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
         <Text variant="headlineMedium" style={styles.title}>
           {buttons.assignProvider}
         </Text>

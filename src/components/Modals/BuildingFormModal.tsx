@@ -93,11 +93,7 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
 
   return (
     <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={onClose}
-        contentContainerStyle={[styles.modalView, modalStyle.container]}
-      >
+      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
         <ScrollView>
           <Text variant="headlineMedium" style={styles.title}>
             {t.title}

@@ -55,11 +55,20 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
     if (!validateForm()) return;
 
     const newService: Service = {
-      ...formData,
-      building: formData.building?.value || null,
       id: uuid.v4().toString(),
+      building: formData.building?.value || null,
+      unit: formData.unit.trim(),
       status: ServiceStatus.pending,
-      receptionDate: new Date().toISOString(),
+      managements: [
+        {
+          id: uuid.v4().toString(),
+          serviceDescription: formData.serviceDescription.trim(),
+          provider: null,
+          receptionDate: new Date().toISOString(),
+          startDate: null,
+          finishDate: null,
+        },
+      ],
     };
 
     await saveService(newService);
@@ -83,11 +92,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
 
   return (
     <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={onClose}
-        contentContainerStyle={[styles.modalView, styles.formsModal]}
-      >
+      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
         <ScrollView>
           <Text variant="headlineMedium" style={styles.title}>
             {services.form.title}

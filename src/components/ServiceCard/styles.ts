@@ -17,34 +17,68 @@ const styling = (status: ServiceStatus) => {
     cardContent: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: theme.spacing.md,
+      marginBottom: theme.spacing.sm,
     },
     dates: {
       alignContent: 'center',
     },
     icon: {
-      backgroundColor: theme.colors.primary.main,
       marginRight: theme.spacing.sm,
+    },
+    chevronIcon: {
+      margin: 'auto',
+      backgroundColor: theme.colors.background.default,
     },
     title: {
       backgroundColor: statusColor[status],
       color: theme.colors.text.white,
-      width: '90%',
+      width: '60%',
       alignSelf: 'center',
-      borderRadius: theme.borderRadius.lg,
-      height: 50,
+      paddingHorizontal: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+      height: 30,
       textAlign: 'center',
       textAlignVertical: 'center',
-      marginBottom: theme.spacing.md,
-      elevation: 5,
-      ...theme.typography.h3,
+      marginBottom: theme.spacing.sm,
+      elevation: 3,
+      ...theme.typography.subtitle1,
     },
     buttonsContainer: {
       alignItems: 'center',
       justifyContent: 'center',
+      flexWrap: 'wrap',
+      gap: theme.spacing.sm,
     },
     divider: {
-      marginVertical: theme.spacing.md,
+      marginVertical: theme.spacing.sm,
+    },
+    halfWidthButton: {
+      width: '46%',
+    },
+    fullWidthButton: {
+      width: '100%',
+    },
+    managementContainer: {
+      marginBottom: theme.spacing.md,
+      backgroundColor: theme.colors.secondary.main,
+      padding: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+    },
+    managementText: {
+      color: theme.colors.text.white,
+    },
+    managementIcon: {
+      marginRight: theme.spacing.sm,
+      backgroundColor: theme.colors.background.default,
+      color: theme.colors.secondary.main,
+    },
+    managementTitle: {
+      color: theme.colors.secondary.main,
+      backgroundColor: theme.colors.background.default,
+      fontWeight: 'bold',
+      borderRadius: theme.borderRadius.md,
+      paddingHorizontal: theme.spacing.md,
+      margin: 'auto',
     },
   });
 };

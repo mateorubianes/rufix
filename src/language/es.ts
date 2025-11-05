@@ -10,6 +10,7 @@ export const es = {
     inProgressClaims: 'Reclamos en proceso',
     finishedClaims: 'Reclamos finalizados',
     noServices: 'No hay reclamos para mostrar.',
+    management: 'Gestión',
     form: {
       title: 'Nuevo Reclamo',
       unit: 'Unidad',
@@ -22,6 +23,7 @@ export const es = {
       providerPlaceholder: 'Seleccione un proveedor',
       validation: 'Todos los campos son obligatorios',
     },
+    managementFormTitle: 'Nueva Gestión',
     receptionDate: 'Fecha de recepción',
     startDate: 'Fecha de inicio',
     finishDate: 'Fecha de finalización',
@@ -89,7 +91,9 @@ export const es = {
     assign: 'Asignar',
     newClaim: 'Nuevo Reclamo',
     create: 'Crear Reclamo',
+    createManagement: 'Crear gestión',
     save: 'Guardar',
     cancel: 'Cancelar',
+    management: 'Gestión',
   },
 };

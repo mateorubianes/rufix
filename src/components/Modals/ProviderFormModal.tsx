@@ -71,11 +71,7 @@ export default function ProviderFormModal({ visible, onClose }: ProviderFormModa
 
   return (
     <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={dismissModal}
-        contentContainerStyle={[styles.modalView, styles.formsModal]}
-      >
+      <Modal visible={visible} onDismiss={dismissModal} contentContainerStyle={styles.modalView}>
         <ScrollView>
           <Text variant="headlineMedium" style={styles.title}>
             {providersText.form.title}

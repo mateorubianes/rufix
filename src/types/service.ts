@@ -7,14 +7,19 @@ export enum ServiceStatus {
   finished = 'finished',
 }
 
+export interface Management {
+  id: string;
+  serviceDescription: string;
+  receptionDate: string;
+  provider: Provider | null;
+  startDate: string | null;
+  finishDate: string | null;
+}
+
 export interface Service {
   id: string;
   building: Building | null;
   unit: string;
-  serviceDescription: string;
-  provider: Provider | null;
   status: ServiceStatus;
-  receptionDate: string;
-  startDate?: string;
-  finishDate?: string;
+  managements: Management[];
 }

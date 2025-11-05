@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Card, Text, Divider } from 'react-native-paper';
-import { View, TextStyle } from 'react-native';
+import { View, TextStyle, TouchableOpacity } from 'react-native';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import styling from './styles';
-import { theme } from '@/src/theme';
 import { ServiceStatus } from '@/src/types/service';
 import { Service } from '@/src/types/service';
-import { formatDate } from '@/src/utils/dateParser';
 import AssignProviderModal from '../Modals//AssignProviderModal';
 import FinishClaimModal from '../Modals/FinishClaimModal';
+import NewManagementModal from '../Modals/NewManagementModal';
+import { ManagementCard } from './ManagementCard';
 
 interface ServiceCardProps {
   service: Service;
@@ -21,26 +21,31 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
   const [openModal, setOpenModal] = useState({
     assignProvider: false,
     finishClaim: false,
+    newManagement: false,
   });
+  const [expanded, setExpanded] = useState<boolean>(false);
 
-  const closeModal = () => {
+  type ModalName = 'assignProvider' | 'finishClaim' | 'newManagement';
+
+  const closeModal = () =>
     setOpenModal({
       assignProvider: false,
       finishClaim: false,
+      newManagement: false,
     });
-  };
-  const openAssignModal = () => {
+
+  const handleOpenModal = (name: ModalName) =>
     setOpenModal({
-      assignProvider: true,
-      finishClaim: false,
+      assignProvider: name === 'assignProvider',
+      finishClaim: name === 'finishClaim',
+      newManagement: name === 'newManagement',
     });
-  };
-  const openFinishModal = () => {
-    setOpenModal({
-      assignProvider: false,
-      finishClaim: true,
-    });
-  };
+
+  const openAssignModal = () => handleOpenModal('assignProvider');
+  const openFinishModal = () => handleOpenModal('finishClaim');
+  const openNewManagementModal = () => handleOpenModal('newManagement');
+
+  const toggleExpand = () => setExpanded(!expanded);
 
   const getStatusLabel = {
     [ServiceStatus.pending]: statusLabels.pending,
@@ -49,6 +54,15 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
   };
 
   const renderCardTitle = getStatusLabel[service.status];
+
+  const renderChevronIcon = () => {
+    const iconName = expanded ? 'chevron-up' : 'chevron-down';
+    return (
+      <TouchableOpacity onPress={toggleExpand}>
+        <Avatar.Icon style={styles.chevronIcon} size={50} icon={iconName} />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <Card style={styles.card} elevation={5}>
@@ -61,54 +75,51 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
             {service.building?.direction ?? ''} {`(${service.unit})`}
           </Text>
         </View>
-        {service.provider && (
-          <View style={styles.cardContent}>
-            <Avatar.Icon style={styles.icon} size={40} icon="account-hard-hat" />
-            <Text variant="titleMedium">{service.provider.name}</Text>
-          </View>
-        )}
-        <View style={styles.cardContent}>
-          <Avatar.Icon style={styles.icon} size={40} icon="tools" />
-          <Text variant="titleMedium">{service.serviceDescription}</Text>
-        </View>
-        <View style={styles.cardContent}>
-          <Avatar.Icon style={styles.icon} size={40} icon="calendar-month" />
-          <View style={styles.dates}>
-            <Text variant="titleMedium">
-              {`${services.receptionDate}: ${formatDate(service.receptionDate)}`}
-            </Text>
-            {service.startDate && (
-              <Text variant="titleMedium">{`${services.startDate}: ${formatDate(service.startDate)}`}</Text>
-            )}
-            {service.finishDate && (
-              <Text variant="titleMedium">{`${services.finishDate}: ${formatDate(service.finishDate)}`}</Text>
-            )}
-          </View>
-        </View>
+        {expanded && <ManagementCard managements={service.managements} status={service.status} />}
+        {!expanded && renderChevronIcon()}
       </Card.Content>
-      <Divider style={styles.divider} bold />
-      {service.status === ServiceStatus.pending && (
-        <Card.Actions style={styles.buttonsContainer}>
-          <Button textColor={theme.colors.primary.main}>{buttons.edit}</Button>
-          <Button onPress={openAssignModal} buttonColor={theme.colors.primary.main}>
-            {buttons.assignProvider}
-          </Button>
-        </Card.Actions>
+      {expanded && (
+        <>
+          <Divider style={styles.divider} bold />
+          {service.status === ServiceStatus.pending && (
+            <Card.Actions style={styles.buttonsContainer}>
+              <Button mode="contained" style={styles.fullWidthButton} onPress={openAssignModal}>
+                {buttons.assignProvider}
+              </Button>
+            </Card.Actions>
+          )}
+          {service.status === ServiceStatus.inProgress && (
+            <Card.Actions style={styles.buttonsContainer}>
+              <Button
+                style={styles.halfWidthButton}
+                onPress={openNewManagementModal}
+                icon="refresh"
+              >
+                {buttons.management}
+              </Button>
+              <Button style={styles.halfWidthButton} onPress={openFinishModal}>
+                {buttons.finish}
+              </Button>
+            </Card.Actions>
+          )}
+          <AssignProviderModal
+            visible={openModal.assignProvider}
+            onClose={closeModal}
+            service={service}
+          />
+          <FinishClaimModal
+            visible={openModal.finishClaim}
+            onClose={closeModal}
+            service={service}
+          />
+          <NewManagementModal
+            visible={openModal.newManagement}
+            onClose={closeModal}
+            service={service}
+          />
+        </>
       )}
-      {service.status === ServiceStatus.inProgress && (
-        <Card.Actions style={styles.buttonsContainer}>
-          <Button textColor={theme.colors.primary.main}>{buttons.edit}</Button>
-          <Button onPress={openFinishModal} buttonColor={theme.colors.primary.main}>
-            {buttons.finishClaim}
-          </Button>
-        </Card.Actions>
-      )}
-      <AssignProviderModal
-        visible={openModal.assignProvider}
-        onClose={closeModal}
-        service={service}
-      />
-      <FinishClaimModal visible={openModal.finishClaim} onClose={closeModal} service={service} />
+      {expanded && renderChevronIcon()}
     </Card>
   );
 };

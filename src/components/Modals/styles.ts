@@ -7,13 +7,6 @@ export const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.sm,
     padding: theme.spacing.md,
     margin: theme.spacing.md,
-    flex: 1,
-  },
-  formsModal: {
-    maxHeight: '45%',
-  },
-  statusModal: {
-    maxHeight: '30%',
   },
   input: {
     marginBottom: theme.spacing.sm,
