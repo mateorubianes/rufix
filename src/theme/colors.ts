@@ -2,15 +2,15 @@ import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors
 
 export const colors = {
   primary: {
-    main: '#803a18',
-    light: '#b66a43',
+    main: '#172145',
   },
   secondary: {
-    main: '#ddb480',
-    light: '#ffe9cbff',
+    main: '#2A3A6B',
+    light: '#686a83ff',
   },
   acento: {
-    main: '#a7c7e7',
+    main: '#4F7CF7',
+    light: '#a7c0fcff',
   },
   success: {
     main: '#34C759',

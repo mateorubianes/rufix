@@ -10,6 +10,6 @@ export const styles = StyleSheet.create({
     width: '83%',
   },
   menuContent: {
-    backgroundColor: theme.colors.secondary.light,
+    backgroundColor: theme.colors.acento.light,
   },
 });

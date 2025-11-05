@@ -83,7 +83,6 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
           ? { name: formData.doormanName.trim(), contact: formData.doormanContact.trim() }
           : null,
     };
-    console.log(JSON.stringify(newBuilding, null, 2));
     await saveBuilding(newBuilding);
     updateEvents.emit();
     resetForm();
