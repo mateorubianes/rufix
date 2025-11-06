@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextStyle, ScrollView, Linking, Platform, TouchableOpacity } from 'react-native';
+import { TextStyle, ScrollView, TouchableOpacity } from 'react-native';
 import { List } from 'react-native-paper';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import { Provider, ProviderSector } from '@/src/types/provider';
@@ -9,6 +9,7 @@ import styles from './styles';
 import { providerSectors as baseProviderSectors } from '@/src/utils/providerSectors';
 import { getProviders } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
+import { callNumber } from '@/src/utils/openPhone';
 
 const createSectorBasedState = <T,>(
   sectors: ProviderSector[],
@@ -60,25 +61,6 @@ export default function ProvidersView() {
       ...prev,
       [section]: !prev[section],
     }));
-  };
-
-  const callNumber = (phone: string) => {
-    let phoneNumber = phone;
-    if (Platform.OS !== 'android') {
-      phoneNumber = `telprompt:${phone}`;
-    } else {
-      phoneNumber = `tel:${phone}`;
-    }
-
-    Linking.canOpenURL(phoneNumber)
-      .then((supported) => {
-        if (!supported) {
-          console.error('Phone number is not available');
-        } else {
-          return Linking.openURL(phoneNumber);
-        }
-      })
-      .catch((err) => console.error('Error opening phone dialer:', err));
   };
 
   const renderProviderItem = (provider: Provider) => (

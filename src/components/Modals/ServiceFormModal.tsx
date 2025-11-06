@@ -20,6 +20,7 @@ interface FormData {
   serviceDescription: string;
   building: SelectInputOption | null;
   provider: Provider | null;
+  contact: string;
 }
 
 export default function ServiceFormModal({ visible, onClose }: ServiceFormModalProps) {
@@ -29,6 +30,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
     serviceDescription: '',
     building: null,
     provider: null,
+    contact: '',
   });
   const [showError, setShowError] = useState(false);
   const [buildingOptions, setBuildingOptions] = useState<{ label: string; value: any }[]>([]);
@@ -47,6 +49,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
       serviceDescription: '',
       building: null,
       provider: null,
+      contact: '',
     });
     setShowError(false);
   };
@@ -59,6 +62,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
       building: formData.building?.value || null,
       unit: formData.unit.trim(),
       status: ServiceStatus.pending,
+      contact: formData.contact,
       managements: [
         {
           id: uuid.v4().toString(),
@@ -103,6 +107,15 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
             value={formData.building}
             options={buildingOptions}
             onChange={(value) => setFormData({ ...formData, building: value })}
+          />
+          <TextInput
+            mode="outlined"
+            label={services.form.contact}
+            placeholder={services.form.contactPlaceholder}
+            value={formData.contact}
+            onChangeText={(text) => setFormData({ ...formData, contact: text })}
+            style={styles.input}
+            keyboardType="numeric"
           />
           <TextInput
             mode="outlined"

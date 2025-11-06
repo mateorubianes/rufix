@@ -9,6 +9,7 @@ import AssignProviderModal from '../Modals//AssignProviderModal';
 import FinishClaimModal from '../Modals/FinishClaimModal';
 import NewManagementModal from '../Modals/NewManagementModal';
 import { ManagementCard } from './ManagementCard';
+import { callNumber } from '@/src/utils/openPhone';
 
 interface ServiceCardProps {
   service: Service;
@@ -75,7 +76,19 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
             {service.building?.direction ?? ''} {`(${service.unit})`}
           </Text>
         </View>
-        {expanded && <ManagementCard managements={service.managements} status={service.status} />}
+
+        {expanded && (
+          <>
+            <TouchableOpacity
+              style={styles.cardContent}
+              onPress={() => callNumber(service.contact)}
+            >
+              <Avatar.Icon style={styles.icon} size={40} icon="phone" />
+              <Text variant="titleMedium">{`${services.contactWith}: ${service.contact}`}</Text>
+            </TouchableOpacity>
+            <ManagementCard managements={service.managements} status={service.status} />
+          </>
+        )}
         {!expanded && renderChevronIcon()}
       </Card.Content>
       {expanded && (

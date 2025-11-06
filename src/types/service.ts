@@ -22,4 +22,5 @@ export interface Service {
   unit: string;
   status: ServiceStatus;
   managements: Management[];
+  contact: string;
 }
