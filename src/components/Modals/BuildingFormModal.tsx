@@ -127,11 +127,11 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
             }))
           : null,
     };
-    console.log(JSON.stringify(newBuilding, null, 2));
-    // await saveBuilding(newBuilding);
-    // updateEvents.emit();
-    // resetForm();
-    // onClose();
+
+    await saveBuilding(newBuilding);
+    updateEvents.emit();
+    resetForm();
+    onClose();
   };
 
   const handleClose = () => {
