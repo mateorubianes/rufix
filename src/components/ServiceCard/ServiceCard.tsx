@@ -115,21 +115,27 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
               </Button>
             </Card.Actions>
           )}
-          <AssignProviderModal
-            visible={openModal.assignProvider}
-            onClose={closeModal}
-            service={service}
-          />
-          <FinishClaimModal
-            visible={openModal.finishClaim}
-            onClose={closeModal}
-            service={service}
-          />
-          <NewManagementModal
-            visible={openModal.newManagement}
-            onClose={closeModal}
-            service={service}
-          />
+          {openModal.assignProvider && (
+            <AssignProviderModal
+              visible={openModal.assignProvider}
+              onClose={closeModal}
+              service={service}
+            />
+          )}
+          {openModal.finishClaim && (
+            <FinishClaimModal
+              visible={openModal.finishClaim}
+              onClose={closeModal}
+              service={service}
+            />
+          )}
+          {openModal.newManagement && (
+            <NewManagementModal
+              visible={openModal.newManagement}
+              onClose={closeModal}
+              service={service}
+            />
+          )}
         </>
       )}
       {expanded && renderChevronIcon()}

@@ -117,7 +117,7 @@ export default function ProviderFormModal({ visible, onClose }: ProviderFormModa
             error={showError && !formData.sector ? providersText.form.errors.sectorRequired : ''}
           />
           <View style={styles.buttonContainer}>
-            <Button mode="outlined" style={styles.button} onPress={onClose}>
+            <Button mode="outlined" style={styles.button} onPress={dismissModal}>
               {buttons.cancel}
             </Button>
             <Button mode="contained" style={styles.button} onPress={handleSubmit}>

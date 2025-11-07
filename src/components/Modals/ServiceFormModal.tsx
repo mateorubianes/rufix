@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { TextInput, Button, Modal, Portal, Text, HelperText, Menu } from 'react-native-paper';
+import { TextInput, Button, Modal, Portal, Text, HelperText } from 'react-native-paper';
 import { Service, ServiceStatus } from '../../types/service';
 import { Provider } from '../../types/provider';
 import { styles } from './styles';

@@ -5,11 +5,19 @@ export const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
   },
-  menu: {
-    marginTop: 55,
-    width: '83%',
+  modalOverlay: {
+    flex: 1,
   },
-  menuContent: {
-    backgroundColor: theme.colors.acento.light,
+  menu: {
+    marginTop: 56,
+    position: 'absolute',
+    backgroundColor: 'white',
+    elevation: 8,
+    maxHeight: 180,
+  },
+  menuItem: {
+    padding: theme.spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.grey[200],
   },
 });
