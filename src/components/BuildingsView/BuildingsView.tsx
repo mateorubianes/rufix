@@ -40,6 +40,7 @@ const BuildingList = ({ building }: { building: Building }) => {
             onPress={() => callNumber(doorman.contact.toString())}
           >
             <List.Item
+              key={doorman.name}
               title={doorman.name}
               description={doorman.contact}
               left={(props) => <List.Icon {...props} icon="account-wrench" />}

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
-import { TextInput, Button, Modal, Portal, Text, HelperText } from 'react-native-paper';
+import { View } from 'react-native';
+import { TextInput, Button, Text, HelperText } from 'react-native-paper';
 import { Management, Service, ServiceStatus } from '../../types/service';
 import { styles } from './styles';
 import { useLanguage } from '../../hooks/useLanguage';
 import { updateService } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
+import ModalContainer from './ModalContainer';
 import uuid from 'react-native-uuid';
 
 interface ServiceFormModalProps {
@@ -67,38 +68,34 @@ export default function NewManagementModal({ visible, onClose, service }: Servic
   };
 
   return (
-    <Portal>
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
-        <ScrollView>
-          <Text variant="headlineMedium" style={styles.title}>
-            {services.managementFormTitle}
-          </Text>
-          <TextInput
-            mode="outlined"
-            label={services.form.description}
-            placeholder={services.form.descriptionPlaceholder}
-            value={serviceDescription}
-            onChangeText={(text) => setServiceDescription(text)}
-            multiline
-            numberOfLines={4}
-            style={styles.input}
-          />
-          {showError && (
-            <HelperText type="error" visible={showError}>
-              {services.form.validation}
-            </HelperText>
-          )}
+    <ModalContainer visible={visible} onClose={onClose}>
+      <Text variant="headlineMedium" style={styles.title}>
+        {services.managementFormTitle}
+      </Text>
+      <TextInput
+        mode="outlined"
+        label={services.form.description}
+        placeholder={services.form.descriptionPlaceholder}
+        value={serviceDescription}
+        onChangeText={(text) => setServiceDescription(text)}
+        multiline
+        numberOfLines={4}
+        style={styles.input}
+      />
+      {showError && (
+        <HelperText type="error" visible={showError}>
+          {services.form.validation}
+        </HelperText>
+      )}
 
-          <View style={styles.buttonContainer}>
-            <Button mode="outlined" onPress={onClose} style={styles.button}>
-              {buttons.cancel}
-            </Button>
-            <Button mode="contained" onPress={handleSubmit} style={styles.button}>
-              {buttons.createManagement}
-            </Button>
-          </View>
-        </ScrollView>
-      </Modal>
-    </Portal>
+      <View style={styles.buttonContainer}>
+        <Button mode="outlined" onPress={onClose} style={styles.button}>
+          {buttons.cancel}
+        </Button>
+        <Button mode="contained" onPress={handleSubmit} style={styles.button}>
+          {buttons.createManagement}
+        </Button>
+      </View>
+    </ModalContainer>
   );
 }

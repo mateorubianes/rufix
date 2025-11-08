@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
-import { TextInput, Button, Modal, Portal, Text, HelperText } from 'react-native-paper';
+import { View } from 'react-native';
+import { TextInput, Button, Text, HelperText } from 'react-native-paper';
 import { Service, ServiceStatus } from '../../types/service';
 import { Provider } from '../../types/provider';
 import { styles } from './styles';
@@ -9,7 +9,7 @@ import { saveService, getBuildings } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 import uuid from 'react-native-uuid';
 import { SelectInput, SelectInputOption } from '../SelectInput/SelectInput';
-
+import ModalContainer from './ModalContainer';
 interface ServiceFormModalProps {
   visible: boolean;
   onClose: () => void;
@@ -95,63 +95,59 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
   }, []);
 
   return (
-    <Portal>
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalView}>
-        <ScrollView>
-          <Text variant="headlineMedium" style={styles.title}>
-            {services.form.title}
-          </Text>
-          <SelectInput
-            label={services.form.building}
-            placeholder={services.form.buildingPlaceholder}
-            value={formData.building}
-            options={buildingOptions}
-            onChange={(value) => setFormData({ ...formData, building: value })}
-          />
-          <TextInput
-            mode="outlined"
-            label={services.form.contact}
-            placeholder={services.form.contactPlaceholder}
-            value={formData.contact}
-            onChangeText={(text) => setFormData({ ...formData, contact: text })}
-            style={styles.input}
-            keyboardType="numeric"
-          />
-          <TextInput
-            mode="outlined"
-            label={services.form.unit}
-            placeholder={services.form.unitPlaceholder}
-            value={formData.unit}
-            onChangeText={(text) => setFormData({ ...formData, unit: text })}
-            style={styles.input}
-          />
-          <TextInput
-            mode="outlined"
-            label={services.form.description}
-            placeholder={services.form.descriptionPlaceholder}
-            value={formData.serviceDescription}
-            onChangeText={(text) => setFormData({ ...formData, serviceDescription: text })}
-            multiline
-            numberOfLines={4}
-            style={styles.input}
-          />
+    <ModalContainer visible={visible} onClose={onClose}>
+      <Text variant="headlineMedium" style={styles.title}>
+        {services.form.title}
+      </Text>
+      <SelectInput
+        label={services.form.building}
+        placeholder={services.form.buildingPlaceholder}
+        value={formData.building}
+        options={buildingOptions}
+        onChange={(value) => setFormData({ ...formData, building: value })}
+      />
+      <TextInput
+        mode="outlined"
+        label={services.form.contact}
+        placeholder={services.form.contactPlaceholder}
+        value={formData.contact}
+        onChangeText={(text) => setFormData({ ...formData, contact: text })}
+        style={styles.input}
+        keyboardType="numeric"
+      />
+      <TextInput
+        mode="outlined"
+        label={services.form.unit}
+        placeholder={services.form.unitPlaceholder}
+        value={formData.unit}
+        onChangeText={(text) => setFormData({ ...formData, unit: text })}
+        style={styles.input}
+      />
+      <TextInput
+        mode="outlined"
+        label={services.form.description}
+        placeholder={services.form.descriptionPlaceholder}
+        value={formData.serviceDescription}
+        onChangeText={(text) => setFormData({ ...formData, serviceDescription: text })}
+        multiline
+        numberOfLines={4}
+        style={styles.input}
+      />
 
-          {showError && (
-            <HelperText type="error" visible={showError}>
-              {services.form.validation}
-            </HelperText>
-          )}
+      {showError && (
+        <HelperText type="error" visible={showError}>
+          {services.form.validation}
+        </HelperText>
+      )}
 
-          <View style={styles.buttonContainer}>
-            <Button mode="outlined" onPress={onClose} style={styles.button}>
-              {buttons.cancel}
-            </Button>
-            <Button mode="contained" onPress={handleSubmit} style={styles.button}>
-              {buttons.create}
-            </Button>
-          </View>
-        </ScrollView>
-      </Modal>
-    </Portal>
+      <View style={styles.buttonContainer}>
+        <Button mode="outlined" onPress={onClose} style={styles.button}>
+          {buttons.cancel}
+        </Button>
+        <Button mode="contained" onPress={handleSubmit} style={styles.button}>
+          {buttons.create}
+        </Button>
+      </View>
+    </ModalContainer>
   );
 }
