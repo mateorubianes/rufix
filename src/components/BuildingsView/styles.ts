@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.md,
   },
   doormenButton: {
-    backgroundColor: theme.colors.primary.main,
+    backgroundColor: theme.colors.secondary.main,
     padding: theme.spacing.sm,
     borderRadius: '50%',
     elevation: 5,

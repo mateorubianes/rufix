@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextStyle, ScrollView, TouchableOpacity } from 'react-native';
+import { TextStyle, ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import { Provider, ProviderSector } from '@/src/types/provider';
@@ -9,7 +9,8 @@ import styles from './styles';
 import { providerSectors as baseProviderSectors } from '@/src/utils/providerSectors';
 import { getProviders } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
-import { callNumber, openWhatsapp } from '@/src/utils/openPhone';
+import PhoneLinkingButtons from '../PhoneLinkingButtons/PhoneLinkingButtons';
+import { colors } from '@/src/theme/colors';
 
 const createSectorBasedState = <T,>(
   sectors: ProviderSector[],
@@ -63,27 +64,15 @@ export default function ProvidersView() {
     }));
   };
 
-  const rightSection = (phoneNumber: string) => (
-    <>
-      <TouchableOpacity onPress={() => callNumber(phoneNumber)} style={styles.contactButtons}>
-        <List.Icon icon="phone" color="white" />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => openWhatsapp(phoneNumber)}
-        style={[styles.contactButtons, styles.whatsappButton]}
-      >
-        <List.Icon icon="whatsapp" color="white" />
-      </TouchableOpacity>
-    </>
-  );
-
   const renderProviderItem = (provider: Provider) => (
     <List.Item
       key={provider.id}
       title={provider.name}
       description={`${provider.phoneNumber}`}
-      left={(props) => <List.Icon {...props} icon="account-hard-hat" />}
-      right={() => rightSection(provider.phoneNumber.toString())}
+      left={(props) => (
+        <List.Icon {...props} icon="account-hard-hat" color={colors.secondary.main} />
+      )}
+      right={() => <PhoneLinkingButtons phoneNumber={provider.phoneNumber.toString()} />}
     />
   );
 

@@ -15,16 +15,6 @@ const styles = {
     marginVertical: theme.spacing.sm,
     borderRadius: theme.borderRadius.md,
   },
-  contactButtons: {
-    backgroundColor: theme.colors.primary.main,
-    padding: theme.spacing.sm,
-    borderRadius: '50%',
-    elevation: 5,
-    marginHorizontal: theme.spacing.xs,
-  },
-  whatsappButton: {
-    backgroundColor: theme.colors.whatsapp,
-  },
 };
 
 export default styles;

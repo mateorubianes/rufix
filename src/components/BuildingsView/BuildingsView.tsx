@@ -9,7 +9,8 @@ import { getBuildings } from '@/src/utils/storage';
 import { Building } from '@/src/types/building';
 import { List } from 'react-native-paper';
 import { useLanguage } from '@/src/hooks/useLanguage';
-import { callNumber } from '@/src/utils/openPhone';
+import { colors } from '@/src/theme/colors';
+import PhoneLinkingButtons from '../PhoneLinkingButtons/PhoneLinkingButtons';
 
 const BuildingList = ({ building }: { building: Building }) => {
   const { buildings: buildingsText, buttons } = useLanguage();
@@ -30,22 +31,22 @@ const BuildingList = ({ building }: { building: Building }) => {
       <List.Item
         title={building.direction}
         description={building.unitsQuantity + ' ' + buildingsText.units}
-        left={(props) => <List.Icon {...props} icon="office-building" />}
+        left={(props) => (
+          <List.Icon {...props} icon="office-building" color={colors.secondary.main} />
+        )}
         right={viewDoormanButton}
       />
       {expanded &&
         building.doorman?.map((doorman) => (
-          <TouchableOpacity
+          <List.Item
             key={doorman.name}
-            onPress={() => callNumber(doorman.contact.toString())}
-          >
-            <List.Item
-              key={doorman.name}
-              title={doorman.name}
-              description={doorman.contact}
-              left={(props) => <List.Icon {...props} icon="account-wrench" />}
-            />
-          </TouchableOpacity>
+            title={doorman.name}
+            description={doorman.contact}
+            left={(props) => (
+              <List.Icon {...props} icon="account-wrench" color={colors.acento.main} />
+            )}
+            right={() => <PhoneLinkingButtons phoneNumber={doorman.contact.toString()} />}
+          />
         ))}
     </View>
   );
