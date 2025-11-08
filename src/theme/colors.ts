@@ -17,6 +17,7 @@ export const colors = {
     light: '#5EDE7C',
     dark: '#248C3F',
   },
+  whatsapp: '#25D366',
   error: {
     main: '#FF3B30',
     light: '#FF6961',

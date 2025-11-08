@@ -18,3 +18,16 @@ export const callNumber = (phone: string) => {
     })
     .catch((err) => console.error('Error opening phone dialer:', err));
 };
+
+export const openWhatsapp = (phoneNumber: string) => {
+  const whatsappUrl = `whatsapp://send?phone=549${phoneNumber}`;
+  Linking.canOpenURL(whatsappUrl)
+    .then((supported) => {
+      if (!supported) {
+        alert('WhatsApp is not installed on your device.');
+      } else {
+        return Linking.openURL(whatsappUrl);
+      }
+    })
+    .catch((err) => console.error('An error occurred', err));
+};

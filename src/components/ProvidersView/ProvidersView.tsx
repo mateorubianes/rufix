@@ -9,7 +9,7 @@ import styles from './styles';
 import { providerSectors as baseProviderSectors } from '@/src/utils/providerSectors';
 import { getProviders } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
-import { callNumber } from '@/src/utils/openPhone';
+import { callNumber, openWhatsapp } from '@/src/utils/openPhone';
 
 const createSectorBasedState = <T,>(
   sectors: ProviderSector[],
@@ -63,14 +63,28 @@ export default function ProvidersView() {
     }));
   };
 
+  const rightSection = (phoneNumber: string) => (
+    <>
+      <TouchableOpacity onPress={() => callNumber(phoneNumber)} style={styles.contactButtons}>
+        <List.Icon icon="phone" color="white" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => openWhatsapp(phoneNumber)}
+        style={[styles.contactButtons, styles.whatsappButton]}
+      >
+        <List.Icon icon="whatsapp" color="white" />
+      </TouchableOpacity>
+    </>
+  );
+
   const renderProviderItem = (provider: Provider) => (
-    <TouchableOpacity key={provider.id} onPress={() => callNumber(provider.phoneNumber.toString())}>
-      <List.Item
-        title={provider.name}
-        description={`${provider.phoneNumber}`}
-        left={(props) => <List.Icon {...props} icon="account-hard-hat" />}
-      />
-    </TouchableOpacity>
+    <List.Item
+      key={provider.id}
+      title={provider.name}
+      description={`${provider.phoneNumber}`}
+      left={(props) => <List.Icon {...props} icon="account-hard-hat" />}
+      right={() => rightSection(provider.phoneNumber.toString())}
+    />
   );
 
   return (

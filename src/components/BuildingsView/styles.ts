@@ -14,8 +14,14 @@ const styles = StyleSheet.create({
   } as TextStyle,
   accordion: {
     backgroundColor: theme.colors.primary.main,
-    marginVertical: theme.spacing.md,
+    marginVertical: theme.spacing.sm,
     borderRadius: theme.borderRadius.md,
+  },
+  doormenButton: {
+    backgroundColor: theme.colors.primary.main,
+    padding: theme.spacing.sm,
+    borderRadius: '50%',
+    elevation: 5,
   },
 });
 
