@@ -11,6 +11,7 @@ import { getProviders } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 import PhoneLinkingButtons from '../PhoneLinkingButtons/PhoneLinkingButtons';
 import { colors } from '@/src/theme/colors';
+import { StorageButton } from '../StorageButton/StorageButton';
 
 const createSectorBasedState = <T,>(
   sectors: ProviderSector[],
@@ -94,6 +95,7 @@ export default function ProvidersView() {
             </List.Accordion>
           ))}
         </ScrollView>
+        <StorageButton type="provider" />
       </SafeAreaView>
     </SafeAreaProvider>
   );

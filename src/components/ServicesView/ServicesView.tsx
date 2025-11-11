@@ -9,6 +9,7 @@ import styles from './styles';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import { getServices } from '@/src/utils/storage';
 import { updateEvents } from '@/src/utils/ServiceUpdateListener';
+import { StorageButton } from '../StorageButton/StorageButton';
 
 interface claimState {
   pending: Service[];
@@ -94,6 +95,7 @@ export default function ServicesView() {
             {renderServiceCard(claims?.finished || [])}
           </List.Accordion>
         </ScrollView>
+        <StorageButton type="service" />
       </SafeAreaView>
     </SafeAreaProvider>
   );
