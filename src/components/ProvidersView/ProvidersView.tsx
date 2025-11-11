@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextStyle, ScrollView } from 'react-native';
+import { TextStyle, ScrollView, View } from 'react-native';
 import { List } from 'react-native-paper';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import { Provider, ProviderSector } from '@/src/types/provider';
@@ -95,7 +95,16 @@ export default function ProvidersView() {
             </List.Accordion>
           ))}
         </ScrollView>
-        <StorageButton type="provider" />
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 8,
+            margin: 'auto',
+          }}
+        >
+          <StorageButton type="provider" action="export" />
+          <StorageButton type="provider" action="import" />
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

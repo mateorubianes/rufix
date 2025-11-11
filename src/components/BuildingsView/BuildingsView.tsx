@@ -11,6 +11,7 @@ import { List } from 'react-native-paper';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import { colors } from '@/src/theme/colors';
 import PhoneLinkingButtons from '../PhoneLinkingButtons/PhoneLinkingButtons';
+import { StorageButton } from '../StorageButton/StorageButton';
 
 const BuildingList = ({ building }: { building: Building }) => {
   const { buildings: buildingsText, buttons } = useLanguage();
@@ -83,10 +84,20 @@ export default function BuildingsView() {
             titleStyle={styles.accordionTitle}
           >
             {buildings.map((building) => (
-              <BuildingList building={building} />
+              <BuildingList building={building} key={building.id} />
             ))}
           </List.Accordion>
         </ScrollView>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 8,
+            margin: 'auto',
+          }}
+        >
+          <StorageButton type="building" action="export" />
+          <StorageButton type="building" action="import" />
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

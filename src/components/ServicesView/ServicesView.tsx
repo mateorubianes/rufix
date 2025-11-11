@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, TextStyle } from 'react-native';
+import { ScrollView, TextStyle, View } from 'react-native';
 import ServiceCard from '@/src/components/ServiceCard/ServiceCard';
 import { Service, ServiceStatus } from '@/src/types/service';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
@@ -95,7 +95,16 @@ export default function ServicesView() {
             {renderServiceCard(claims?.finished || [])}
           </List.Accordion>
         </ScrollView>
-        <StorageButton type="service" />
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 8,
+            margin: 'auto',
+          }}
+        >
+          <StorageButton type="building" action="export" />
+          <StorageButton type="building" action="import" />
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
