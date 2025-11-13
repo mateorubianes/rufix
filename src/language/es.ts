@@ -30,6 +30,14 @@ export const es = {
     receptionDate: 'Fecha de recepción',
     startDate: 'Fecha de inicio',
     finishDate: 'Fecha de finalización',
+    sendProviderMessage: (
+      providerName: string,
+      buildingAddress: string,
+      unit: string,
+      description: string,
+      contactWith: string,
+    ) =>
+      `Hola ${providerName},\n\nSe le ha asignado un nuevo trabajo en el edificio ubicado en ${buildingAddress}, unidad ${unit}.\n\nDescripción del problema: ${description}\n\nPor favor, comuníquese con ${contactWith} para coordinar los detalles.\n\nGracias.`,
   },
   buildings: {
     title: 'Edificios',
@@ -105,5 +113,6 @@ export const es = {
     save: 'Guardar',
     cancel: 'Cancelar',
     management: 'Gestión',
+    sendProvider: 'Enviar al proveedor',
   },
 };

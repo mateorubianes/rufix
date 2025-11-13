@@ -1,22 +1,36 @@
 import { Management } from '@/src/types/service';
+import { Service } from '@/src/types/service';
 import React from 'react';
-import { Avatar, Text } from 'react-native-paper';
+import { Avatar, Button, Text } from 'react-native-paper';
 import { View } from 'react-native';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import styling from './styles';
 import { ServiceStatus } from '@/src/types/service';
 import { formatDate } from '@/src/utils/dateParser';
 import { theme } from '@/src/theme';
+import { openWhatsapp } from '@/src/utils/openPhone';
 
 interface ManagementCardProps {
+  service: Service;
   managements: Management[];
   status: ServiceStatus;
 }
 
-export const ManagementCard = ({ managements, status }: ManagementCardProps) => {
+export const ManagementCard = ({ service, managements, status }: ManagementCardProps) => {
   const styles = styling(status);
-  const { services } = useLanguage();
+  const { services, buttons } = useLanguage();
   const ICON_SIZE = 35;
+
+  const handleSendProvider = (management: Management) => {
+    const message = services.sendProviderMessage(
+      management.provider?.name || '',
+      service.building?.direction || '',
+      service.unit || '',
+      management.serviceDescription,
+      service.contact || '',
+    );
+    openWhatsapp(management.provider?.phoneNumber.toString() || '', message);
+  };
 
   return managements.map((management, index) => (
     <View key={management.id} style={styles.managementContainer}>
@@ -74,6 +88,13 @@ export const ManagementCard = ({ managements, status }: ManagementCardProps) => 
           )}
         </View>
       </View>
+      <Button
+        mode="elevated"
+        style={styles.fullWidthButton}
+        onPress={() => handleSendProvider(management)}
+      >
+        {buttons.sendProvider}
+      </Button>
     </View>
   ));
 };

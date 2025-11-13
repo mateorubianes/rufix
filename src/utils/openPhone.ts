@@ -19,8 +19,10 @@ export const callNumber = (phone: string) => {
     .catch((err) => console.error('Error opening phone dialer:', err));
 };
 
-export const openWhatsapp = (phoneNumber: string) => {
-  const whatsappUrl = `whatsapp://send?phone=549${phoneNumber}`;
+export const openWhatsapp = (phoneNumber: string, message?: string) => {
+  const whatsappUrl = `whatsapp://send?phone=549${phoneNumber}&text=${encodeURIComponent(
+    message || '',
+  )}`;
   Linking.canOpenURL(whatsappUrl)
     .then((supported) => {
       if (!supported) {

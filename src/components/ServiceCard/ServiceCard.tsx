@@ -67,18 +67,29 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
 
   return (
     <Card style={styles.card} elevation={5}>
-      <Card.Title title={renderCardTitle} titleStyle={styles.title as TextStyle} />
-      <Divider style={styles.divider} bold />
-      <Card.Content>
-        <View style={styles.cardContent}>
-          <Avatar.Icon style={styles.icon} size={40} icon="office-building-marker" />
-          <Text variant="titleMedium">
-            {service.building?.direction ?? ''} {`(${service.unit})`}
-          </Text>
+      {!expanded && (
+        <View style={[styles.cardContent, styles.spaceEvenly]}>
+          <View style={styles.cardContent}>
+            <Avatar.Icon style={styles.icon} size={40} icon="office-building-marker" />
+            <Text variant="titleMedium">
+              {service.building?.direction ?? ''} {`(${service.unit})`}
+            </Text>
+          </View>
+          <Avatar.Icon style={styles.statusIcon} size={30} />
         </View>
+      )}
+      {expanded && (
+        <>
+          <Card.Title title={renderCardTitle} titleStyle={styles.title as TextStyle} />
+          <Divider style={styles.divider} bold />
+          <Card.Content>
+            <View style={styles.cardContent}>
+              <Avatar.Icon style={styles.icon} size={40} icon="office-building-marker" />
+              <Text variant="titleMedium">
+                {service.building?.direction ?? ''} {`(${service.unit})`}
+              </Text>
+            </View>
 
-        {expanded && (
-          <>
             <TouchableOpacity
               style={styles.cardContent}
               onPress={() => callNumber(service.contact)}
@@ -86,13 +97,13 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
               <Avatar.Icon style={styles.icon} size={40} icon="phone" />
               <Text variant="titleMedium">{`${services.contactWith}: ${service.contact}`}</Text>
             </TouchableOpacity>
-            <ManagementCard managements={service.managements} status={service.status} />
-          </>
-        )}
-        {!expanded && renderChevronIcon()}
-      </Card.Content>
-      {expanded && (
-        <>
+            <ManagementCard
+              service={service}
+              managements={service.managements}
+              status={service.status}
+            />
+          </Card.Content>
+
           <Divider style={styles.divider} bold />
           {service.status === ServiceStatus.pending && (
             <Card.Actions style={styles.buttonsContainer}>
@@ -115,30 +126,26 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
               </Button>
             </Card.Actions>
           )}
-          {openModal.assignProvider && (
-            <AssignProviderModal
-              visible={openModal.assignProvider}
-              onClose={closeModal}
-              service={service}
-            />
-          )}
-          {openModal.finishClaim && (
-            <FinishClaimModal
-              visible={openModal.finishClaim}
-              onClose={closeModal}
-              service={service}
-            />
-          )}
-          {openModal.newManagement && (
-            <NewManagementModal
-              visible={openModal.newManagement}
-              onClose={closeModal}
-              service={service}
-            />
-          )}
         </>
       )}
-      {expanded && renderChevronIcon()}
+      {openModal.assignProvider && (
+        <AssignProviderModal
+          visible={openModal.assignProvider}
+          onClose={closeModal}
+          service={service}
+        />
+      )}
+      {openModal.finishClaim && (
+        <FinishClaimModal visible={openModal.finishClaim} onClose={closeModal} service={service} />
+      )}
+      {openModal.newManagement && (
+        <NewManagementModal
+          visible={openModal.newManagement}
+          onClose={closeModal}
+          service={service}
+        />
+      )}
+      {renderChevronIcon()}
     </Card>
   );
 };

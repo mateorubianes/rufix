@@ -19,6 +19,15 @@ const styling = (status: ServiceStatus) => {
       alignItems: 'center',
       marginBottom: theme.spacing.sm,
     },
+    statusIcon: {
+      backgroundColor: statusColor[status],
+    },
+    spaceEvenly: {
+      justifyContent: 'space-evenly',
+    },
+    spaceBetween: {
+      justifyContent: 'space-between',
+    },
     dates: {
       alignContent: 'center',
     },
