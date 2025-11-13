@@ -4,6 +4,11 @@ export const es = {
     providers: 'Proveedores',
     buildings: 'Edificios',
   },
+  addCard: {
+    services: 'Agregar Reclamo',
+    providers: 'Agregar Proveedor',
+    buildings: 'Agregar Edificio',
+  },
   services: {
     title: 'Reclamos',
     pendingClaims: 'Reclamos pendientes',
