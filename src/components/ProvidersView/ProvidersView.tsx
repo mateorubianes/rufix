@@ -94,17 +94,17 @@ export default function ProvidersView() {
               {(providersBySector[sector.key] || []).map(renderProviderItem)}
             </List.Accordion>
           ))}
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 8,
+              margin: 'auto',
+            }}
+          >
+            <StorageButton type="provider" action="export" />
+            <StorageButton type="provider" action="import" />
+          </View>
         </ScrollView>
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: 8,
-            margin: 'auto',
-          }}
-        >
-          <StorageButton type="provider" action="export" />
-          <StorageButton type="provider" action="import" />
-        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

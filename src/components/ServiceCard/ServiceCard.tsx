@@ -97,11 +97,7 @@ export const ServiceCard = ({ service }: ServiceCardProps) => {
               <Avatar.Icon style={styles.icon} size={40} icon="phone" />
               <Text variant="titleMedium">{`${services.contactWith}: ${service.contact}`}</Text>
             </TouchableOpacity>
-            <ManagementCard
-              service={service}
-              managements={service.managements}
-              status={service.status}
-            />
+            <ManagementCard service={service} managements={service.managements} />
           </Card.Content>
 
           <Divider style={styles.divider} bold />

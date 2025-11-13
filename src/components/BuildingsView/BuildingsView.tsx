@@ -87,17 +87,17 @@ export default function BuildingsView() {
               <BuildingList building={building} key={building.id} />
             ))}
           </List.Accordion>
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 8,
+              margin: 'auto',
+            }}
+          >
+            <StorageButton type="building" action="export" />
+            <StorageButton type="building" action="import" />
+          </View>
         </ScrollView>
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: 8,
-            margin: 'auto',
-          }}
-        >
-          <StorageButton type="building" action="export" />
-          <StorageButton type="building" action="import" />
-        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
