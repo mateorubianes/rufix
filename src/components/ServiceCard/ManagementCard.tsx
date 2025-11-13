@@ -86,7 +86,7 @@ export const ManagementCard = ({ service, managements }: ManagementCardProps) =>
           )}
         </View>
       </View>
-      {service.status === ServiceStatus.inProgress && (
+      {management.status === ServiceStatus.inProgress && (
         <Button
           mode="elevated"
           style={styles.fullWidthButton}

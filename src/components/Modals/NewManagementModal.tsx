@@ -45,6 +45,7 @@ export default function NewManagementModal({ visible, onClose, service }: Servic
     updatedManagements[finishedManagementIndex] = {
       ...updatedManagements[finishedManagementIndex],
       finishDate: new Date().toISOString(),
+      status: ServiceStatus.finished,
     };
     //Create new management
     updatedManagements.push({
@@ -54,6 +55,7 @@ export default function NewManagementModal({ visible, onClose, service }: Servic
       receptionDate: new Date().toISOString(),
       startDate: null,
       finishDate: null,
+      status: ServiceStatus.pending,
     });
 
     const updatedService: Service = {

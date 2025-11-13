@@ -46,6 +46,7 @@ export default function AssignProviderModal({
       ...updatedManagements[managementIndex],
       provider: selectedProvider.value,
       startDate: new Date().toISOString(),
+      status: ServiceStatus.inProgress,
     };
 
     const updatedService: Service = {

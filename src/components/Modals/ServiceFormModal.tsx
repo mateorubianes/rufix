@@ -71,6 +71,7 @@ export default function ServiceFormModal({ visible, onClose }: ServiceFormModalP
           receptionDate: new Date().toISOString(),
           startDate: null,
           finishDate: null,
+          status: ServiceStatus.pending,
         },
       ],
     };

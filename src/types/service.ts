@@ -14,6 +14,7 @@ export interface Management {
   provider: Provider | null;
   startDate: string | null;
   finishDate: string | null;
+  status: ServiceStatus;
 }
 
 export interface Service {
