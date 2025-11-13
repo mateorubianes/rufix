@@ -1,6 +1,6 @@
 export interface Doorman {
   name: string;
-  contact: number;
+  contact: string;
 }
 
 export interface Building {

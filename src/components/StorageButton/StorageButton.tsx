@@ -15,6 +15,7 @@ import {
 import { Service } from '../../types/service';
 import { Provider } from '../../types/provider';
 import { Building } from '../../types/building';
+import { updateEvents } from '@/src/utils/ServiceUpdateListener';
 
 type DataType = 'provider' | 'service' | 'building';
 
@@ -197,6 +198,7 @@ export const StorageButton: React.FC<StorageButtonProps> = ({ type, action }) =>
           'Importación exitosa',
           `Se importaron ${validCount} ${getTypeName(type)}${invalidCount > 0 ? `. ${invalidCount} elementos fueron omitidos por no tener el formato correcto.` : '.'}`,
         );
+        updateEvents.emit();
       } else {
         Alert.alert(
           'Error',

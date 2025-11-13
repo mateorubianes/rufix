@@ -23,9 +23,9 @@ export default function AddCard({ type }: AddCardProps) {
         <Avatar.Icon size={50} icon="plus" style={styles.icon} color={styles.icon.color} />
       </TouchableOpacity>
 
-      {type === 'providers' ? (
+      {modalVisible && type === 'providers' ? (
         <ProviderFormModal visible={modalVisible} onClose={() => setModalVisible(false)} />
-      ) : type === 'buildings' ? (
+      ) : modalVisible && type === 'buildings' ? (
         <BuildingFormModal visible={modalVisible} onClose={() => setModalVisible(false)} />
       ) : (
         <ServiceFormModal visible={modalVisible} onClose={() => setModalVisible(false)} />

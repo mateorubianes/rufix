@@ -55,7 +55,7 @@ export function SelectInput({
           label={label}
           placeholder={placeholder}
           value={value?.label || ''}
-          right={<TextInput.Icon icon="menu-down" />}
+          right={<TextInput.Icon icon="menu-down" onPress={openMenu} />}
           editable={false}
           showSoftInputOnFocus={false}
           error={!!error}

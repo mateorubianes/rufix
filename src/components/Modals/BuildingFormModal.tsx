@@ -114,9 +114,9 @@ export default function BuildingFormModal({ visible, onClose }: BuildingFormModa
       unitsQuantity: Number(formData.units),
       doorman:
         formData.hasDoorman === 'yes'
-          ? formData.doormen.map((d) => ({
-              name: d.name.trim(),
-              contact: Number(d.contact),
+          ? formData.doormen.map((doorman) => ({
+              name: doorman.name.trim(),
+              contact: doorman.contact,
             }))
           : null,
     };
