@@ -9,6 +9,15 @@ export const es = {
     providers: 'Agregar Proveedor',
     buildings: 'Agregar Edificio',
   },
+  auth: {
+    password: 'Contraseña',
+    email: 'Email',
+    signIn: 'Ingresar',
+    helperText: 'Por favor, complete ambos campos',
+    login: 'Iniciar sesión',
+    welcome: '¡Bienvenido a Rufix!',
+    enterCredentials: 'Ingrese sus credenciales para continuar',
+  },
   services: {
     title: 'Reclamos',
     pendingClaims: 'Reclamos pendientes',
