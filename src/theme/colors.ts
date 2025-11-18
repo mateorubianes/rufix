@@ -2,8 +2,8 @@ import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors
 
 export const colors = {
   primary: {
-    main: '#172145',
-    light: '#2A3A6B',
+    main: '#22374b',
+    light: '#22374b',
   },
   secondary: {
     main: '#686a83ff',
