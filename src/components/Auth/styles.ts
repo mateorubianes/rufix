@@ -16,16 +16,23 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: theme.spacing.sm,
+    borderRadius: theme.borderRadius.sm,
+  },
+  loginForm: {
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.background.default,
+    borderRadius: theme.borderRadius.xl,
   },
   title: {
     fontSize: theme.typography.h1.fontSize,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: theme.spacing.md,
+    marginVertical: theme.spacing.xl,
   },
   subtitle: {
     textAlign: 'center',
-    marginBottom: theme.spacing.xxl,
+    marginBottom: theme.spacing.sm,
+    fontSize: theme.typography.body1.fontSize,
   },
 });
 

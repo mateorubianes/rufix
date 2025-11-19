@@ -27,44 +27,46 @@ export default function AuthView() {
     <View style={styles.container}>
       <Image source={require('@/assets/images/logo.png')} style={styles.image} />
       <Text style={styles.title}>{auth.welcome}</Text>
-      <Text style={styles.subtitle}>{auth.enterCredentials}</Text>
-      <TextInput
-        label={auth.email}
-        value={email}
-        onChangeText={(text) => {
-          setEmail(text);
-          setShowError(false);
-        }}
-        mode="outlined"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        style={styles.input}
-      />
-      <TextInput
-        label={auth.password}
-        value={password}
-        onChangeText={(text) => {
-          setPassword(text);
-          setShowError(false);
-        }}
-        mode="outlined"
-        secureTextEntry={!showPassword}
-        right={
-          <TextInput.Icon
-            icon={showPassword ? 'eye-off' : 'eye'}
-            onPress={() => setShowPassword(!showPassword)}
-          />
-        }
-        style={styles.input}
-      />
-      {showError && (
-        <HelperText type="error" visible={showError}>
-          {auth.helperText}
-        </HelperText>
-      )}
-      <Button mode="contained" onPress={handleSignIn} style={styles.button}>
-        {auth.signIn}
-      </Button>
+      <View style={styles.loginForm}>
+        <Text style={styles.subtitle}>{auth.enterCredentials}</Text>
+        <TextInput
+          label={auth.email}
+          value={email}
+          onChangeText={(text) => {
+            setEmail(text);
+            setShowError(false);
+          }}
+          mode="outlined"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          style={styles.input}
+        />
+        <TextInput
+          label={auth.password}
+          value={password}
+          onChangeText={(text) => {
+            setPassword(text);
+            setShowError(false);
+          }}
+          mode="outlined"
+          secureTextEntry={!showPassword}
+          right={
+            <TextInput.Icon
+              icon={showPassword ? 'eye-off' : 'eye'}
+              onPress={() => setShowPassword(!showPassword)}
+            />
+          }
+          style={styles.input}
+        />
+        {showError && (
+          <HelperText type="error" visible={showError}>
+            {auth.helperText}
+          </HelperText>
+        )}
+        <Button mode="contained" onPress={handleSignIn} style={styles.button}>
+          {auth.signIn}
+        </Button>
+      </View>
     </View>
   );
 }
