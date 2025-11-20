@@ -4,6 +4,7 @@ import { Button, TextInput, HelperText, Text } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import styles from './styles';
+import { authService } from '@/src/api';
 
 export default function AuthView() {
   const router = useRouter();
@@ -13,14 +14,47 @@ export default function AuthView() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!email || !password) {
       setShowError(true);
+      setErrorMessage(auth.helperText);
       return;
     }
     setShowError(false);
-    router.replace('/(tabs)/services');
+    setErrorMessage('');
+    setIsLoading(true);
+
+    try {
+      const response = await authService.login({ email, password });
+
+      if (response.success) {
+        console.log('Login exitoso:', response);
+        router.replace('/(tabs)/services');
+      } else {
+        setShowError(true);
+        setErrorMessage(response.error || 'Error al iniciar sesión');
+      }
+    } catch (error: any) {
+      setShowError(true);
+
+      // Mensajes de error más específicos
+      if (error.message?.includes('Network request failed')) {
+        setErrorMessage('No se puede conectar al servidor. Verifica tu conexión a internet.');
+      } else if (error.statusCode === 401) {
+        setErrorMessage('Email o contraseña incorrectos');
+      } else if (error.statusCode === 404) {
+        setErrorMessage('Servicio no disponible');
+      } else {
+        setErrorMessage(error.message || 'Error al iniciar sesión');
+      }
+
+      console.error('Error en login:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,10 +94,16 @@ export default function AuthView() {
         />
         {showError && (
           <HelperText type="error" visible={showError}>
-            {auth.helperText}
+            {errorMessage || auth.helperText}
           </HelperText>
         )}
-        <Button mode="contained" onPress={handleSignIn} style={styles.button}>
+        <Button
+          mode="contained"
+          onPress={handleSignIn}
+          style={styles.button}
+          loading={isLoading}
+          disabled={isLoading}
+        >
           {auth.signIn}
         </Button>
       </View>
