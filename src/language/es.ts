@@ -17,6 +17,12 @@ export const es = {
     login: 'Iniciar sesión',
     welcome: '¡Bienvenido a Rufix!',
     enterCredentials: 'Ingrese sus credenciales para continuar',
+    errors: {
+      internet: 'No se puede conectar al servidor. Verifica tu conexión a internet.',
+      invalidCredentials: 'Email o contraseña incorrectos',
+      serviceUnavailable: 'Servicio no disponible',
+      unknown: 'Error al iniciar sesión',
+    },
   },
   services: {
     title: 'Reclamos',

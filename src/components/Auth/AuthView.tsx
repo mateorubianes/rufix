@@ -13,17 +13,14 @@ export default function AuthView() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
     if (!email || !password) {
-      setShowError(true);
       setErrorMessage(auth.helperText);
       return;
     }
-    setShowError(false);
     setErrorMessage('');
     setIsLoading(true);
 
@@ -34,24 +31,20 @@ export default function AuthView() {
         console.log('Login exitoso:', response);
         router.replace('/(tabs)/services');
       } else {
-        setShowError(true);
-        setErrorMessage(response.error || 'Error al iniciar sesión');
+        setErrorMessage(response.error || auth.errors.unknown);
       }
     } catch (error: any) {
-      setShowError(true);
-
-      // Mensajes de error más específicos
       if (error.message?.includes('Network request failed')) {
-        setErrorMessage('No se puede conectar al servidor. Verifica tu conexión a internet.');
+        setErrorMessage(auth.errors.internet);
       } else if (error.statusCode === 401) {
-        setErrorMessage('Email o contraseña incorrectos');
+        setErrorMessage(auth.errors.invalidCredentials);
       } else if (error.statusCode === 404) {
-        setErrorMessage('Servicio no disponible');
+        setErrorMessage(auth.errors.serviceUnavailable);
       } else {
-        setErrorMessage(error.message || 'Error al iniciar sesión');
+        setErrorMessage(error.message || auth.errors.unknown);
       }
 
-      console.error('Error en login:', error);
+      console.error('(src\\components\\Auth) Error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +61,6 @@ export default function AuthView() {
           value={email}
           onChangeText={(text) => {
             setEmail(text);
-            setShowError(false);
           }}
           mode="outlined"
           keyboardType="email-address"
@@ -80,7 +72,7 @@ export default function AuthView() {
           value={password}
           onChangeText={(text) => {
             setPassword(text);
-            setShowError(false);
+            setErrorMessage('');
           }}
           mode="outlined"
           secureTextEntry={!showPassword}
@@ -92,11 +84,7 @@ export default function AuthView() {
           }
           style={styles.input}
         />
-        {showError && (
-          <HelperText type="error" visible={showError}>
-            {errorMessage || auth.helperText}
-          </HelperText>
-        )}
+        {errorMessage && <HelperText type="error">{errorMessage || auth.helperText}</HelperText>}
         <Button
           mode="contained"
           onPress={handleSignIn}
