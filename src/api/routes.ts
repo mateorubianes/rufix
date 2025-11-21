@@ -1,4 +1,4 @@
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.16:3000';
 
 export const API_ROUTES = {
   AUTH: {
