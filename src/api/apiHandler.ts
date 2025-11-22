@@ -159,6 +159,10 @@ export const apiHandler = async <T = any>(
     }
 
     let finalHeaders = addDefaultHeaders(headers);
+    finalHeaders = {
+      ...finalHeaders,
+      'x-api-key': process.env.EXPO_PUBLIC_API_KEY || '',
+    };
 
     if (requiresAuth) {
       finalHeaders = await addAuthHeader(finalHeaders);
