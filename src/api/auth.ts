@@ -34,22 +34,6 @@ export const authService = {
    *
    * @param credentials - Email y password del usuario
    * @returns Token JWT y datos del usuario
-   *
-   * @example
-   * try {
-   *   const response = await authService.login({
-   *     email: 'user@example.com',
-   *     password: 'password123'
-   *   });
-   *
-   *   if (response.success && response.data) {
-   *     console.log('Login exitoso:', response.data.token);
-   *   }
-   * } catch (error) {
-   *   if (error instanceof ApiError) {
-   *     console.error('Error de login:', error.message);
-   *   }
-   * }
    */
   login: async (credentials: LoginCredentials) => {
     try {

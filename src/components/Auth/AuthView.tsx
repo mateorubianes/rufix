@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useLanguage } from '@/src/hooks/useLanguage';
 import styles from './styles';
 import { authService } from '@/src/api';
+import APP_ROUTES from '@/src/utils/appRoutes';
 
 export default function AuthView() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function AuthView() {
 
       if (response.success) {
         console.log('Login exitoso:', response);
-        router.replace('/(tabs)/services');
+        router.replace(APP_ROUTES.tabs.services);
       } else {
         setErrorMessage(response.error || auth.errors.unknown);
       }
